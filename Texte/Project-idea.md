@@ -1,4 +1,13 @@
 # Assignment 3 - Project Idea
+
+## Group:
+
+| Team        | ID           | 
+| :------------- |:-------------:|
+| Christian Baltzer|19970210-T453|
+| Carolin Brückmann|19980317-T306|
+
+
 ## The Problem
 For our Project Idea, we want to solve the chaos Problem of a shop. 
 Most shops rely on paperwork to keep track of their storage. This method is slow and vulnerable to mistakes. 
@@ -39,6 +48,6 @@ Between the Website and the DB, we will have an Analyzer with a REST API. This o
 The Website is grabbing its Informations from the API and will then present them to the User. 
 There will be multiple sites, one for each User group.
 
-#### "The Randomizers" - our virtuell People
+#### "The Randomizers" - our virtual People
 To bring the whole System to life we need Interaction. Sadly we can't use a real shop or real employes, which is why we use little Python scripts, that will randomly insert data into the DB. There will also be randomizers that represent customers which buy products. 
 

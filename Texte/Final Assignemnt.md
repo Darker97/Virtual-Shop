@@ -21,6 +21,9 @@ It should be easy for the enduser to access the nessesary data.
 ### Protection of personal data
 The System should be conform with the newest standarts in the security of personal data. We would like to make sure that the data we use for analyses is anonymous, so there is no way that the data could lead to a person.
 
+## The data itself
+The data we are using for our System is coming from different sources. We have amazon comments from Kabel, Produkts from us, and a random name list from out site.  
+
 ## How to build a cluster
 Because of our requirments we have decided to use the Framework Kubernetes for our Project. Kubernetes is providing a framework to deploy a scalable cluster of docker containers. 
 The Plan is to deploy all functions of the System in single containers, so we can easily deploy more containers of a speciall kind, if needed.
@@ -33,7 +36,7 @@ The Webpages will be written in HTML and CSS, the logic in JavaScript. Because t
 
 The Database will be based on MYSQL
 
-The Data for the Pages will be delivered by the API, however, we still have some functions that need to be used on function side like hashing or storing of security features. 
+The Data for the Pages will be delivered by the API, however, we still have some functions that need to be used on function side like hashing or storing of security features.
 
 
 
@@ -66,16 +69,21 @@ To make sure only the right Person can access the right data, we wil implement a
 ![](img/Security.png)
 
 The system will get a hashed password and username from the webpage and then check the password with the database. If the information check our, the API will send a coockie with a tooken back, which will then be stored in the cache of the browser. The cookie is created by hashing a random sequence and the time, which will both be stored in the database. 
-If the user is now accessing data, he sends the coockie to the API with the request, which then gets checked with the database. If the hash is correct and not too old, the data is send back. 
+If the user is now accessing data, he sends the coockie to the API with the request, which then gets checked with the database. If the hash is correct and not too old, the data is send back. We will also implement a permission system so we can track what a person can do and what not. For Employes we will create specific rules, which can do more or less things. (For Example, Technician, Sales Person)
 
-In the case that the given data is wrong at any point of the function, the API will answer with an Error. The client will then react to that.
+In the case that the given data is wrong at any point of the function, the API will answer with an Error. The client will then react to the given answer.
 ### Task 3 - The Standart Web Page
+The Standart Webpage is meant for persons who are not logged in in any way. Therfore the person can only see standart information, such as the Products and if it is available in the shop at that moment. 
+If the standart Page is shown, the user gets the possibilities to login or to create a new User. (?)
 
 ### Task 4 - The Coustumers Page
+A Customer can see everything the standart Person can see but in more depth. Instead of just an available String, the user can now see how many there are. A logged in User gets the extra feature of leaving comments, but can't create a new User. 
 
 ### Task 5 - The Employed Page
+The Employed can see Information like what is available and when it will be available next. He can't create new comments, but he can read them.
 
 ### Task 6 - The Page for the Manager
+The Manager gets information like sales figures and data about the delivers.  
 
 ### Task 7 - Helper One, Creating orders
 
@@ -84,6 +92,3 @@ In the case that the given data is wrong at any point of the function, the API w
 ### Task 9 - Helper Three, Comment on what we did
 
 ### Task 10 - Building the cluster
-
-
-

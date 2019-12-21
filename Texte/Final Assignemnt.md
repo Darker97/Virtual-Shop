@@ -107,3 +107,6 @@ The Manager gets information like sales figures and data about the delivers.
 ### Optional Task - Deeper Analysis
 Optional, we would like to implement a tool for deeper analysis. 
 This will include predictions about the future, for example  about our stock, and the predicted actions of our customers. 
+
+###  Control Bot 
+Because we deploy the System on an external Machine, we would like to keep track of everything that happens. For this Purpose, we create a Bot that checks the Satus of the System and will then send a message via Telegram. 

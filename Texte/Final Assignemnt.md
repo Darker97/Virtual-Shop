@@ -65,7 +65,7 @@ This means that each row has a check sum containing the hashed last row.
 The API will be written in Java and will be the only process connecting to the Database. 
 
 #### Security Service
-The Security Service has multiple tasks to solve. On the one hand it will provide all necessary functions to make sure that the user only gets the information he is allowed to, and will check all the given requests to the API for standart attacks, such as an SQL injection. 
+The Security Service has multiple tasks to solve. On the one hand it will provide all necessary functions to make sure that the user only gets the information he is allowed to, and will check all the given requests to the API for standart attacks, such as an SQL injection. The Security Service is seperated in two parts, the authentication Service and the parts in the API.
 
 ##### Injection Attacks
 A known thread for a database is an SQL Injection. This means that the user is able to insert code into the given query and to collect more data than he is allowed to. If an SQL injection is possible, the attacker can get access to all data that is stored in the database or, in the worst case scenario can even alter it.
@@ -76,10 +76,15 @@ To make sure only the right Person can access the right data, we wil implement a
 
 ![](img/Security.png)
 
-The system will get a hashed password and username from the webpage and then check the password with the database. If the information check our, the API will send a coockie with a tooken back, which will then be stored in the cache of the browser. The cookie is created by hashing a random sequence and the time, which will both be stored in the database. 
-If the user is now accessing data, he sends the coockie to the API with the request, which then gets checked with the database. If the hash is correct and not too old, the data is send back. We will also implement a permission system so we can track what a person can do and what not. For Employes we will create specific rules, which can do more or less things. (For Example, Technician, Sales Person)
+The system will get a hashed password and username from the webpage and then check the password with the database. If the information check our, the API will send a cookie with a tooken back, which will then be stored in the cache of the browser. 
 
-In the case that the given data is wrong at any point of the function, the API will answer with an Error. The client will then react to the given answer.
+The cookie itself contains information like user and timestamp which will then be signed by our private key and encrypted by our public key. 
+
+If the user is now accessing data, he sends the coockie to the API with the request, which then gets checked with the database. The Authentication Service will then check the signature and the stored data. 
+
+We will also implement a permission system so we can track what a person can do and what not. For Employes we will create specific rules, which can do more or less things. (For Example, Technician, Sales Person)
+
+In the case that the given data is wrong at any point of the function, the API will answer with an Error and an Error Code. The client will then react to the given answer. 
 ### Task 3 - The Standart Web Page
 The Standart Webpage is meant for persons who are not logged in in any way. Therfore the person can only see standart information, such as the Products and if it is available in the shop at that moment. 
 If the standart Page is shown, the user gets the possibilities to login or to create a new User. (?)

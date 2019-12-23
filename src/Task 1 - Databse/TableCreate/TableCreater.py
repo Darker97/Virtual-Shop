@@ -32,8 +32,8 @@ def queryLoader(Connection):
     print("Starting to load Data")
     File = open("query.sql")
     Querys = File.readlines()
-    for aciton in Querys:
-        Connection.execute(aciton)
+    for action in Querys:
+        Connection.execute(action)
 
 
 

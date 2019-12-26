@@ -92,3 +92,18 @@ def LoadingProducts(Connection):
         FinalQuery = (insertQuery ,(data))
         Connection.execute(FinalQuery)
         Connection.commit()
+
+def LoadingCustomers(Connection):
+    File = open ("./Querys/Product_DATA")
+    Data = File.readlines()
+
+    insertQuery =  """INSERT INTO `Shop`.`Customers` (`ID`, `Name`, `Surname`) 
+                        VALUES (%s, %s, %s);  """
+    x = range(300)
+    for data in tqdm(x, desc="Generating Users"):
+        Name = names.get_first_name()
+        surname = names.get_last_name()
+
+        FinalQuery = (insertQuery ,(x, Name, surname))
+        Connection.execute(FinalQuery)
+        Connection.commit()

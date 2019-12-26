@@ -1,7 +1,10 @@
 import json
 import mysql.connector as mysql
 import time
+from tqdm import tqdm
 import socket
+import names
+
 
 def connection():
     File = open("Setup.config").readlines()
@@ -52,10 +55,13 @@ def startFile():
     try:
         data = connection()
         if data.is_connected():
-            queryLoader(data.cursor())
+            LoadingTables(data.cursor())
             print("------------------------------------------------------")
             print("Tables Are Created!!!")
             print("------------------------------------------------------")
+            print("\n")
+            print("Loading Data")
+            
     except Exception as e:
         print("------------------------------------------------------")
         print(e)
@@ -68,3 +74,21 @@ def startFile():
 # ------------------------------------------------ #
 
 startFile()
+
+def LoadingTables(Connection):
+    File = open("./Querys/Table_query.sql")
+    Querys = File.readlines()
+    for action in tqdm(Querys, desc="Loading Tables"):
+        Connection.execute(action)
+
+def LoadingProducts(Connection):
+    File = open ("./Querys/Product_DATA")
+    Data = File.readlines()
+
+    insertQuery =  """INSERT INTO `Shop`.`Products` (`ID`, `Name`, `PrdouctNumber`, `Description`, `Calories`, `Protein`, `Fat`, `Sodium`, `Fiber`, `Carbo`, `Sugar`, `Vitamins`) 
+                        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"""
+
+    for data in tqdm(Data, desc="Loading Products"):
+        FinalQuery = (insertQuery ,(data))
+        Connection.execute(FinalQuery)
+        Connection.commit()

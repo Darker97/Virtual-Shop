@@ -4,7 +4,7 @@ import time
 from tqdm import tqdm
 import socket
 import names
-
+import hashlib
 
 def connection():
     File = open("Setup.config").readlines()
@@ -29,16 +29,6 @@ def connection():
         # auth_plugin='mysql_native_password'
     )
     return Database
-
-
-def queryLoader(Connection):
-    print("Starting to load Data")
-    File = open("query.sql")
-    Querys = File.readlines()
-    for action in Querys:
-        Connection.execute(action)
-
-
 
 # Checks if the Connection is established. If not, we wait.
 def startFile():
@@ -84,27 +74,40 @@ def LoadingTables(Connection):
 def LoadingProducts(Connection):
     File = open ("./Querys/Product_DATA")
     Data = File.readlines()
+    ID = 1
 
     insertQuery =  """INSERT INTO `Shop`.`Products` (`ID`, `Name`, `PrdouctNumber`, `Description`, `Calories`, `Protein`, `Fat`, `Sodium`, `Fiber`, `Carbo`, `Sugar`, `Vitamins`) 
                         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"""
-
     for data in tqdm(Data, desc="Loading Products"):
-        FinalQuery = (insertQuery ,(data))
+        decrypted = json.load(data)
+
+        Name = str(decrypted["name"])
+        ProductNumber = ID
+        Description = ""
+        Calories = str(decrypted["calories"])
+        Protein = str(decrypted["protein"])
+        Fat = str(decrypted["fat"])
+        Sodium = str(decrypted["sodium"])
+        Fiber = str(decrypted["fiber"])
+        Carbo = str(decrypted["carbo"])
+        Sugar = str(decrypted["sugars"])
+        Vitamins = str(decrypted["vitamins"])
+
+        FinalQuery = (insertQuery ,(ID, Name, ProductNumber, Description, Calories, Protein, Fat, Sodium, Fiber, Carbo, Sugar, Vitamins))
         Connection.execute(FinalQuery)
         Connection.commit()
 
-def LoadingCustomers(Connection):
-    File = open ("./Querys/Product_DATA")
-    Data = File.readlines()
+        ID += 1
 
+def LoadingCustomers(Connection):
     insertQuery =  """INSERT INTO `Shop`.`Customers` (`ID`, `Name`, `Surname`) 
                         VALUES (%s, %s, %s);  """
     x = range(300)
-    for data in tqdm(x, desc="Generating Users"):
+    for i in tqdm(x, desc="Generating Users"):
         Name = names.get_first_name()
         surname = names.get_last_name()
 
-        FinalQuery = (insertQuery ,(x, Name, surname))
+        FinalQuery = (insertQuery ,(i, Name, surname))
         Connection.execute(FinalQuery)
         Connection.commit()
 

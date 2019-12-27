@@ -107,3 +107,32 @@ def LoadingCustomers(Connection):
         FinalQuery = (insertQuery ,(x, Name, surname))
         Connection.execute(FinalQuery)
         Connection.commit()
+
+def LoadingUsers(Connection):
+    file = open("Querys/UserData.json")
+    strings = file.readlines()
+
+    insertCustomerQuery =  """INSERT INTO `Shop`.`Customers` (`ID`, `Name`, `Surname`) 
+                        VALUES (%s, %s, %s);  """
+    insertUserQuery = """INSERT INTO `Shop`.`User` (`USERID`, `ROLE`, `UserName_Hashed`, `Password_Hashed`, `Customers_ID`) 
+                    VALUES (%s, %s, %s, %s, %s);  """
+
+    for data in strings:
+        encoded = json.load(data)
+
+        ID = str(encoded["Customers_ID"])
+        Name = str(encoded["Name"])
+        Surname = str(encoded["Surname"])
+        USERID = str(encoded["USERID"])
+        Role = str(encoded["ROLE"])
+        UserName = str(encoded["UserName"])
+        Password = str(encoded["Password"])
+        Customers_ID = ID
+
+        # UserName and Password need to be hashed!!!
+        UserName = hashlib.sha3_256(UserName)
+        Password = hashlib.sha3_256(Password)
+
+        # Insert the Users into the Database
+        Connection.execute(insertCustomerQuery, (ID, Name, Surname))
+        Connection.execute(insertUserQuery, (USERID, Role, UserName, Password, Customers_ID))

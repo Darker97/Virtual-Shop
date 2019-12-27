@@ -2,10 +2,10 @@ import json
 import mysql.connector as mysql
 import time
 from tqdm import tqdm
-import socket
 import names
 import hashlib
 
+# Establishes the Connection to the DB
 def connection():
     File = open("Setup.config").readlines()
     host = File.pop(0)
@@ -65,12 +65,14 @@ def startFile():
 
 startFile()
 
+# Loads the Tables
 def LoadingTables(Connection):
     File = open("./Querys/Table_query.sql")
     Querys = File.readlines()
     for action in tqdm(Querys, desc="Loading Tables"):
         Connection.execute(action)
 
+# Loads the Products
 def LoadingProducts(Connection):
     File = open ("./Querys/Product_DATA")
     Data = File.readlines()
@@ -99,6 +101,7 @@ def LoadingProducts(Connection):
 
         ID += 1
 
+# Loads random Customers
 def LoadingCustomers(Connection):
     insertQuery =  """INSERT INTO `Shop`.`Customers` (`ID`, `Name`, `Surname`) 
                         VALUES (%s, %s, %s);  """
@@ -111,6 +114,7 @@ def LoadingCustomers(Connection):
         Connection.execute(FinalQuery)
         Connection.commit()
 
+# Loads pre-made Users
 def LoadingUsers(Connection):
     file = open("Querys/UserData.json")
     strings = file.readlines()

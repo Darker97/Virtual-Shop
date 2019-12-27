@@ -120,7 +120,7 @@ def LoadingUsers(Connection):
     insertUserQuery = """INSERT INTO `Shop`.`User` (`USERID`, `ROLE`, `UserName_Hashed`, `Password_Hashed`, `Customers_ID`) 
                     VALUES (%s, %s, %s, %s, %s);  """
 
-    for data in strings:
+    for data in tqdm(strings, desc="Loading Users"):
         encoded = json.load(data)
 
         ID = str(encoded["Customers_ID"])

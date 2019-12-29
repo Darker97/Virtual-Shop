@@ -5,7 +5,8 @@ import mysql.connector as mysql
 import flask as Flask
 from flask import request
 
-
+import ApiLogic
+import BotLogic
 
 # ------------------------------------------
 
@@ -16,40 +17,7 @@ def setup():
 
 # Exit function that gets called when the Tool is closed
 def exit():
-    BotExit("Good Bye")
-
-def BotExit(Nachricht):
-    # Beim Bot abmelden
-
-def BotStart(Nachricht):
-    # Beim Bot anmelden
-
-# ------------------------------------------
-# API logic - Erverything the API will do
-
-def QuestionToTheServer(SecurityCookie, QuestionID):
-    if CanHeDoThat():
-        return
-    else:
-        return "Error 413 - Data Forbidden"
-
-def NewData(SecurityCookie, Data, DataID):
-    if CanHeDoThat():
-        return
-    else:
-        return "Error 413 - Data Forbidden"
-
-def NewUser(SecurityCookie, Data):
-    if CanHeDoThat():
-        return
-    else:
-        return "Error 413 - No Admin"
-
-def Login(Password, UserName):
-    try:
-        return SecurityGiveUser()
-    except:
-        return "Error 413 - Not a User"
+    BotLogic.BotExit("Good Bye")
 
 # ------------------------------------------
 # API - The Paths of the API
@@ -62,19 +30,23 @@ def startAPI():
 
     @app.route('/Data', methods=['GET'])
     def platzhalter():
-        return QuestionToTheServer(request.form['SecurityCookie'], request.form['QuestionID'])
+        print("GET DATA Request")
+        return ApiLogic.QuestionToTheServer(request.form['SecurityCookie'], request.form['QuestionID'])
 
     @app.route('/Data', methods=['POST'])
     def platzhalter():
-        return NewData(request.form['SecurityCookie'],request.form['Data'],request.form['DataID'])
+        print("POST DATA Request")
+        return ApiLogic.NewData(request.form['SecurityCookie'],request.form['Data'],request.form['DataID'])
 
     @app.route('/User', methods=['GET'])
     def platzhalter():
-        return Login(request.form['Password'], request.form['UserName'])
+        print("GET USER Request")
+        return ApiLogic.Login(request.form['Password'], request.form['UserName'])
 
     @app.route('/User', methods=['POST'])
     def platzhalter():
-        return NewUser(request.form['SecurityCookie'], request.form['Data'])
+        print("GET USER Request")
+        return ApiLogic.NewUser(request.form['SecurityCookie'], request.form['Data'])
 
 
     @app.errorhandler(404)
@@ -83,14 +55,6 @@ def startAPI():
 
     app.run(debug=True)
 
-
-# ------------------------------------------
-# Check with the Security
-
-def CanHeDoThat():
-    pass
-def SecurityGiveUser():
-    pass
 
 # ------------------------------------------
 # Connection with Database
@@ -137,7 +101,6 @@ def main():
         print("Trying again")
         print("------------------------------------------------------")
         main()
-
 
 # ------------------------------------------
 setup()

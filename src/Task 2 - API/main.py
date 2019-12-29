@@ -1,23 +1,30 @@
-from flask import Flask
-from flask_restful import Api, Resources, reparse
+import atexit
 
 # ------------------------------------------
 main()
 
 # ------------------------------------------
 
+# setup for the tool
+def setup():
+    atexit.register(exit)
+    BotStart("Hello")
+
+# Exit function that gets called when the Tool is closed
+def exit():
+    BotExit("Good Bye")
+
+def BotExit(Nachricht):
+    # Beim Bot abmelden
+
+def BotStart(Nachricht):
+    # Beim Bot anmelden
+
+# ------------------------------------------
+
+
+# ------------------------------------------
 
 def main():
     pass
 
-
-class Data(Resources):
-    def get(self, info):
-        return info + "" + "--> Jay, Works :D"
-        pass
-
-    def post(self, Function, Data):
-        pass
-
-    def put(self):
-        pass

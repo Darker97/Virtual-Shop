@@ -36,7 +36,22 @@ This means that each row has a check sum containing the hashed last row.
 > Normaly a company should seperate most of these tables in different databases, so even if one database is braeached, the others is still safe. To keep things simple and because of resource shortage, we won't implement this and will store everything in the same base. 
 
 ### Task 2 - The API
-The API will be written in Java and will be the only process connecting to the Database. 
+The API will be written in Python and will be the only available process connecting to the Database. We will stick to the REST Api standart. However, without the need for specific Operations, we will only allow requests with GET and POST. 
+
+![Planing Diagram for the API](img/Api-Planing.png)
+
+The Api has four main purposes:
+1. Granting access to data
+2. Granting the ability to change the data
+3. Granting the access
+4. Granting a way to grant the access
+
+Therfore we have two paths for the API. On the one hand the data itself. If a Client needs Data, it sends a GET request with the QuestionCode and the authorisation Cookie to the API. To add new Data to the database, it will send a POST request with the specific Data, the authorisation Cookie and a Code with context about the data.
+
+The other purpose is the authentication. With a get request, the user can send his credentials and get a security tooken in the form of a coockie. The User can also send a POST request, if he wants to add a new User to the System.
+
+All requests will be checked by the security Service, to make sure that no User without granted access can enter the System.
+
 
 #### Security Service
 The Security Service has multiple tasks to solve. On the one hand it will provide all necessary functions to make sure that the user only gets the information he is allowed to, and will check all the given requests to the API for standart attacks, such as an SQL injection. The Security Service is seperated in two parts, the authentication Service and the parts in the API.
@@ -59,6 +74,8 @@ If the user is now accessing data, he sends the coockie to the API with the requ
 We will also implement a permission system so we can track what a person can do and what not. For Employes we will create specific rules, which can do more or less things. (For Example, Technician, Sales Person)
 
 In the case that the given data is wrong at any point of the function, the API will answer with an Error and an Error Code. The client will then react to the given answer. 
+
+
 ### Task 3 - The Standart Web Page
 The Standart Webpage is meant for persons who are not logged in in any way. Therfore the person can only see standart information, such as the Products and if it is available in the shop at that moment. 
 If the standart Page is shown, the user gets the possibilities to login or to create a new User. (?)

@@ -21,7 +21,12 @@ First of all, we had to create a structure for our Github Project:
     ├── Task\ 8\ -\ Website\ Customer
     ├── Task\ 9\ -\ Website\ Managment
     ├── Task\ 99\ -\ Docker
-    │   └── docker-compose.yml
     └── readme.md
 ```
 
+|Folder|Info|
+|---|---|
+|Data|contains all Nesescary .csv Files with the Data we use in our Shop|
+|Planing| contains all Models and Graphs for the Planing of our System|
+|Texte| contains all Pictures and .md files we use for our Final assignment|
+|src| Because we have so many Microservices, we devide them in single Tasks, which are stored in seperate Folders.|

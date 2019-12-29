@@ -7,13 +7,14 @@ from flask import request
 
 import ApiLogic
 import BotLogic
+import Database
 
 # ------------------------------------------
 
 # setup for the tool
 def setup():
     atexit.register(exit)
-    BotStart("Hello")
+    BotLogic.BotStart("Hello")
 
 # Exit function that gets called when the Tool is closed
 def exit():
@@ -21,8 +22,10 @@ def exit():
 
 # ------------------------------------------
 # API - The Paths of the API
-def startAPI():
+def startAPI(Database):
     app = Flask("API")
+
+    query = ApiLogic.queryloader()
 
     @app.route('/')
     def index():
@@ -31,22 +34,27 @@ def startAPI():
     @app.route('/Data', methods=['GET'])
     def platzhalter():
         print("GET DATA Request")
-        return ApiLogic.QuestionToTheServer(request.form['SecurityCookie'], request.form['QuestionID'])
+        return ApiLogic.QuestionToTheServer(request.form['SecurityCookie'], request.form['QuestionID'], Database, query)
+
+    @app.route('/Data/Special', mehods=['GET'])
+    def platzhalter():
+        print("Special DATA GET REQUEST")
+        return ApiLogic.SpecialQuestionToTheServer(request.form['SecurityCookie'], request.form['Data'], request.form['QuestionID'], Database, query)
 
     @app.route('/Data', methods=['POST'])
     def platzhalter():
         print("POST DATA Request")
-        return ApiLogic.NewData(request.form['SecurityCookie'],request.form['Data'],request.form['DataID'])
+        return ApiLogic.NewData(request.form['SecurityCookie'],request.form['Data'],request.form['DataID'], Database, query)
 
     @app.route('/User', methods=['GET'])
     def platzhalter():
         print("GET USER Request")
-        return ApiLogic.Login(request.form['Password'], request.form['UserName'])
+        return ApiLogic.Login(request.form['Password'], request.form['UserName'], Database, query)
 
     @app.route('/User', methods=['POST'])
     def platzhalter():
         print("GET USER Request")
-        return ApiLogic.NewUser(request.form['SecurityCookie'], request.form['Data'])
+        return ApiLogic.NewUser(request.form['SecurityCookie'], request.form['Data'], Database, query)
 
 
     @app.errorhandler(404)
@@ -57,42 +65,28 @@ def startAPI():
 
 
 # ------------------------------------------
-# Connection with Database
-def connection():
-    File = open("Setup.config").readlines()
-    host = File.pop(0)
-    port = File.pop(0)
-    user = File.pop(0)
-    passwd = File.pop(0)
-    database = File.pop(0)
-
-    print("------------------------------------------------------")
-    print("Connecting to Database: " + host + " as " + user + " on port " + port)
-    print("Password: " + passwd)
-    print("------------------------------------------------------")
-
-    Database = mysql.connect(
-        host=host,
-        port=port,
-        user=user,
-        # passwd=passwd,
-        # unix_socket="../var/run/mysqld/mysqld.sock",
-        database=database
-        # auth_plugin='mysql_native_password'
-    )
-    return Database
-# ------------------------------------------
 # Control of the Process
 # Will connect to the DB and then start the API
 def main():
+    print("""
+             _____ _                    ___  ______ _____ 
+            /  ___| |                  / _ \ | ___ \_   _|
+            \ `--.| |__   ___  _ __   / /_\ \| |_/ / | |  
+             `--. \ '_ \ / _ \| '_ \  |  _  ||  __/  | |  
+            /\__/ / | | | (_) | |_) | | | | || |    _| |_ 
+            \____/|_| |_|\___/| .__/  \_| |_/\_|    \___/ 
+                              | |                         
+                              |_|                         
+    """)
+
     try:
-        Database = connection()
-        if Database.is_connected():
+        DB = Database.connection()
+        if DB.is_connected():
             print("Connected to Database!!!")
             print("Proceeding")
             print("------------------------------------------------------")
             print("\n")
-            startAPI()
+            startAPI(DB)
     except Exception as e:
         print("------------------------------------------------------")
         print(e)
@@ -103,5 +97,6 @@ def main():
         main()
 
 # ------------------------------------------
+
 setup()
 main()

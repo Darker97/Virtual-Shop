@@ -1,5 +1,6 @@
 import atexit
 import flask as Flask
+from flask import request
 
 
 
@@ -21,65 +22,72 @@ def BotStart(Nachricht):
     # Beim Bot anmelden
 
 # ------------------------------------------
-# API logic
+# API logic - Erverything the API will do
 
-def QuestionToTheServer():
+def QuestionToTheServer(SecurityCookie, QuestionID):
     if CanHeDoThat():
         return
     else:
         return "Error 413 - Data Forbidden"
 
-def NewData():
+def NewData(SecurityCookie, Data, DataID):
     if CanHeDoThat():
         return
     else:
         return "Error 413 - Data Forbidden"
 
-def NewUser():
+def NewUser(SecurityCookie, Data):
     if CanHeDoThat():
         return
     else:
         return "Error 413 - No Admin"
 
-def Login():
-    if CanHeDoThat():
-        return
-    else:
+def Login(Password, UserName):
+    try:
+        return SecurityGiveUser()
+    except:
         return "Error 413 - Not a User"
 
 # ------------------------------------------
-# API
+# API - The Paths of the API
 def startAPI():
     app = Flask("API")
+
     @app.route('/')
     def index():
         return """ The Most efficient way to Optimize an SQL Query is to eliminate it.  """
 
     @app.route('/Data', methods=['GET'])
     def platzhalter():
-        return QuestionToTheServer()
+        return QuestionToTheServer(request.form['SecurityCookie'], request.form['QuestionID'])
 
     @app.route('/Data', methods=['POST'])
     def platzhalter():
-        return NewData()
+        return NewData(request.form['SecurityCookie'],request.form['Data'],request.form['DataID'])
 
     @app.route('/User', methods=['GET'])
     def platzhalter():
-        return Login()
+        return Login(request.form['Password'], request.form['UserName'])
 
     @app.route('/User', methods=['POST'])
     def platzhalter():
-        return NewUser()
+        return NewUser(request.form['SecurityCookie'], request.form['Data'])
 
+
+    @app.errorhandler(404)
+    def not_found(error):
+        return "Error 404 - I'm a Teapot"
 
     app.run(debug=True)
 
 
 # ------------------------------------------
-# Check for credentials
+# Check with the Security
+
 def CanHeDoThat():
     pass
-
+def SecurityGiveUser():
+    pass
 
 # ------------------------------------------
 # Connection with Database

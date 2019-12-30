@@ -6,7 +6,7 @@ import Database
 
 def StandartQuestionToTheServer(SecurityCookie, QuestionID, Database, query):
     if security.CanHeDoThat(SecurityCookie):
-         return Database.SendQuery(query[0], Database)
+         return Database.SendQuery(query[QuestionID], Database)
     else:
         return "Error 413 - Data Forbidden"
 
@@ -37,7 +37,7 @@ def NewUser(SecurityCookie, Data, Database, query):
 
 def Login(Password, UserName, Database, query):
     # TODO
-    return security.SecurityGiveUser()
+    return security.SecurityGiveUser(Password, UserName, Database)
 
 
 def queryloader():

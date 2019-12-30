@@ -2,10 +2,12 @@
 # Check with the Security API
 
 def CanHeDoThat():
-    pass
+    return True
 
 def SecurityGiveUser():
-    pass
+    User = ""
+
+    return User
 
 def InjectionChecker():
-    pass
+    return True

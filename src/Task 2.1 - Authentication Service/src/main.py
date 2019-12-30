@@ -1,6 +1,9 @@
-import gpg
+import gpg as gpg
 import mysql.connector as mysql
-
+import flask as Flask
+from flask import request
+from flask import Flask
+import datetime
 
 # ------------------------------------------
 # Generates the keys we need
@@ -16,14 +19,50 @@ def createKeys():
     #Private Key
     exportKey.insert(1, gpg.export_keys(key, True))
 
-    return exportKey
+    return key
 
 
 # all api Functions
-def startApi():
+def startApi(db, key):
     print("Starting API")
 
+    app = Flask("SecApi")
+    @app.route('/')
+    def index():
+        return("But I need to protect the humans.")
 
+    @app.route('/chaos')
+    def Chaos():
+        return "LEAVE_ME_HERE.readme"
+
+    @app.route('/LEAVE_ME_HERE.readme')
+    def Leave():
+        return "FSOCIETY.dat"
+
+    @app.route('/security/login')
+    def login():
+        User = request.form['User']
+        Password = request.form['Password']
+        if isThisAUser(db,User,Password)
+            Token = User + "-----|------" +  Password + "-----|------" + datetime.datetime.now(datetime.timezone.utc)
+            # sign with public
+            Token = sign(gpg.export_keys(key), Token)
+            # encrypt with private
+            Token = Encryptor(gpg.export_key(key,True), Token)
+            return Token
+        else:
+            return "ERROR"
+
+    @app.route('/securtiy/check')
+    def check():
+        Token = request.form['Token']
+
+        # Decrypt with public
+        Token = Decryptor(gpg.export_keys(key), Token)#
+        # verify with privat
+        return verify(gpg.export_key(key,True), Token)
+
+    app.run(debug=True)
 
 # ------------------------------------------
 # connects to the Database
@@ -80,7 +119,7 @@ def sign(key, data):
 
 def verify(key, data):
     verified = gpg.verify(data, key)
-    return str(verified)
+    return verified
 # ------------------------------------------
 
 # ------------------------------------------
@@ -96,7 +135,7 @@ print("""
 print("------------------------------------------")
 print("Creating new Keys")
 print("\n")
-key = createKeys()
+# key = createKeys()
 print("------------------------------------------")
 print("\n")
 startApi()

@@ -12,12 +12,12 @@ def createKeys():
     input_data = gpg.gen_key_input(key_type="RSA", key_length=1024)
     key = gpg.gen_key(input_data)
 
-    exportKey = []
+    
     # Public key
-    exportKey.insert(0, gpg.export_keys(key))
+    # gpg.export_keys(key)
 
     #Private Key
-    exportKey.insert(1, gpg.export_keys(key, True))
+    # gpg.export_keys(key, True)
 
     return key
 
@@ -43,7 +43,7 @@ def startApi(db, key):
     def login():
         User = request.form['User']
         Password = request.form['Password']
-        if isThisAUser(db,User,Password)
+        if isThisAUser(db,User,Password):
             Token = User + "-----|------" +  Password + "-----|------" + datetime.datetime.now(datetime.timezone.utc)
             # sign with public
             Token = sign(gpg.export_keys(key), Token)

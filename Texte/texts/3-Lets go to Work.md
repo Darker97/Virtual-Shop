@@ -30,3 +30,10 @@ First of all, we had to create a structure for our Github Project:
 |Planing| contains all Models and Graphs for the Planing of our System|
 |Texte| contains all Pictures and .md files we use for our Final assignment|
 |src| Because we have so many Microservices, we devide them in single Tasks, which are stored in seperate Folders.|
+
+
+
+## The Server Structure
+
+Because we don’t have a real server on our hands, we use a cluster of MicroComputers. Consisting of Raspberry-pis, these will behave like a Server cluster. 
+

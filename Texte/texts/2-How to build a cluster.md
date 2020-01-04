@@ -1,14 +1,13 @@
 ## How to build a cluster
-Because of our requirments we have decided to use the Framework Kubernetes for our Project. Kubernetes is providing a framework to deploy a scalable cluster of docker containers. 
+Because of our requirments we have decided to use Kubernetes for our Project. Kubernetes is providing a framework to deploy a scalable cluster of docker containers. Because we don’t have a Server, we tryed to deploy the system in a Raspberry pi cluster.
 The Plan is to deploy all functions of the System in single containers, so we can easily deploy more containers of a speciall kind, if needed.
 
 !["The Finished System"](./img/Diagram.png)
 
-Because of their size and simplicity, we are planing to use python scripts for the helpers. 
-Because of the experience of the Team with the language Java, we would like to use it for our API. 
-The Webpages will be written in HTML and CSS, the logic in JavaScript. Because the team has never worked with any frameworks, we are only going to add Node and maybe some usefull Librarys for extra functionality. For the security function, we will either use a container and function on its own, or implement that function into our api.
+Because of their size and simplicity, we are planing to use python scripts for the helpers and the API.
+The Webpages will be written in HTML and CSS, the logic in JavaScript. Because the team has never worked with any frameworks, we are only going to add Node and maybe some usefull Librarys for extra functionality. For the security function, we will use a Python script and a gpg library. 
 
-The Database will be based on MYSQL
+The Database will be based on My-SQL
 
 The Data for the Pages will be delivered by the API, however, we still have some functions that need to be used on function side like hashing or storing of security features.
 

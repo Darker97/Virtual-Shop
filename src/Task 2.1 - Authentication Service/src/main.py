@@ -1,26 +1,11 @@
 import gpg as gpg
-import mysql.connector as mysql
 import flask as Flask
 from flask import request
 from flask import Flask
 import datetime
 
-# ------------------------------------------
-# Generates the keys we need
-
-def createKeys():
-    input_data = gpg.gen_key_input(key_type="RSA", key_length=1024)
-    key = gpg.gen_key(input_data)
-
-    
-    # Public key
-    # gpg.export_keys(key)
-
-    #Private Key
-    # gpg.export_keys(key, True)
-
-    return key
-
+import GPG_Functions
+import Database_Functions
 
 # all api Functions
 def startApi(db, key):
@@ -39,6 +24,7 @@ def startApi(db, key):
     def Leave():
         return "FSOCIETY.dat"
 
+    # Checks if the User is there and sends a Token
     @app.route('/security/login')
     def login():
         User = request.form['User']
@@ -46,49 +32,39 @@ def startApi(db, key):
         if isThisAUser(db,User,Password):
             Token = User + "-----|------" +  Password + "-----|------" + datetime.datetime.now(datetime.timezone.utc)
             # sign with public
-            Token = sign(gpg.export_keys(key), Token)
+            Token = GPG_Functions.sign(gpg.export_keys(key), Token)
             # encrypt with private
-            Token = Encryptor(gpg.export_key(key,True), Token)
+            Token = GPG_Functions.Encryptor(gpg.export_key(key,True), Token)
             return Token
         else:
             return "ERROR"
 
+    # checks if its our Token
     @app.route('/securtiy/check')
     def check():
         Token = request.form['Token']
 
         # Decrypt with public
-        Token = Decryptor(gpg.export_keys(key), Token)#
+        Token = GPG_Functions.Decryptor(gpg.export_keys(key), Token)#
         # verify with privat
-        return verify(gpg.export_key(key,True), Token)
+        return GPG_Functions.verify(gpg.export_key(key,True), Token)
+
+    # Checks if the given question contains a Word that leds to SQL Injections.
+    @app.route('/security/injection')
+    def checkForInjection():
+        question = request.form['question']
+
+        File = open("InjectionList.txt")
+        WordList = File.readlines()
+
+        for Word in WordList:
+            if Word in question:
+                return False
+        
+        return True
 
     app.run(debug=True)
 
-# ------------------------------------------
-# connects to the Database
-def Database():
-    File = open("Setup.config").readlines()
-    host = File.pop(0)
-    port = File.pop(0)
-    user = File.pop(0)
-    passwd = File.pop(0)
-    database = File.pop(0)
-
-    print("------------------------------------------------------")
-    print("Connecting to Database: " + host + " as " + user + " on port " + port)
-    print("Password: " + passwd)
-    print("------------------------------------------------------")
-
-    Database = mysql.connect(
-        host=host,
-        port=port,
-        user=user,
-        # passwd=passwd,
-        # unix_socket="../var/run/mysqld/mysqld.sock",
-        database=database
-        # auth_plugin='mysql_native_password'
-    )
-    return Database
 
 # Is the given User Valid?
 def isThisAUser(Database, User, Password):
@@ -104,25 +80,11 @@ def isThisAUser(Database, User, Password):
     else:
         return False
 
-# ------------------------------------------
-def Encryptor(key, data):
-    encrypted_data = gpg.encrypt(data, key)
-    return str(encrypted_data)
 
-def Decryptor(key, data):
-    decrypted_data = gpg.decrypt(data, key)
-    return str(decrypted_data)
 
-def sign(key, data):
-    signed_data = gpg.sign(data, key)
-    return str(signed_data)
+# ---------------------------------------------------------------------
 
-def verify(key, data):
-    verified = gpg.verify(data, key)
-    return verified
-# ------------------------------------------
 
-# ------------------------------------------
 print("""
    _____                      _ __           ___    ____  ____
   / ___/___  _______  _______(_) /___  __   /   |  / __ \/  _/
@@ -133,9 +95,10 @@ print("""
 """)
 
 print("------------------------------------------")
-print("Creating new Keys")
+print("Creating new Keys and connecting to Database")
 print("\n")
-# key = createKeys()
+key = GPG_Functions.createKeys()
+DB = Database_Functions.ConnectToDatabase()
 print("------------------------------------------")
 print("\n")
-startApi()
+startApi(DB, key)

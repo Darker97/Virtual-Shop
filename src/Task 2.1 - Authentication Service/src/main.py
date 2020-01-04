@@ -3,6 +3,7 @@ import flask as Flask
 from flask import request
 from flask import Flask
 import datetime
+import json
 
 import GPG_Functions
 import Database_Functions
@@ -29,8 +30,22 @@ def startApi(db, key):
     def login():
         User = request.form['User']
         Password = request.form['Password']
-        if isThisAUser(db,User,Password):
-            Token = User + "-----|------" +  Password + "-----|------" + datetime.datetime.now(datetime.timezone.utc)
+        role = isThisAUser(db,User,Password)
+
+        Timestamp = ""
+
+        if isThisAUser(db,User,Password) != "False":
+            Token = """ 
+            { 
+                "User" = "%s", 
+                "password" = %s, 
+                "Role"= %s, 
+                "Timestamp" = %s 
+            } """
+
+            FinalToken = (Token, (User, Password, role, Timestamp))
+            json.dumps(FinalToken)
+
             # sign with public
             Token = GPG_Functions.sign(gpg.export_keys(key), Token)
             # encrypt with private
@@ -39,7 +54,7 @@ def startApi(db, key):
         else:
             return "ERROR"
 
-    # checks if its our Token
+    # checks if its our Token and returns the role if yes.
     @app.route('/securtiy/check')
     def check():
         Token = request.form['Token']
@@ -47,7 +62,10 @@ def startApi(db, key):
         # Decrypt with public
         Token = GPG_Functions.Decryptor(gpg.export_keys(key), Token)#
         # verify with privat
-        return GPG_Functions.verify(gpg.export_key(key,True), Token)
+        if GPG_Functions.verify(gpg.export_key(key,True), Token):
+            return Token["Role"]
+        else:
+            return "False"
 
     # Checks if the given question contains a Word that leds to SQL Injections.
     @app.route('/security/injection')
@@ -59,9 +77,9 @@ def startApi(db, key):
 
         for Word in WordList:
             if Word in question:
-                return False
+                return "False"
         
-        return True
+        return "True"
 
     app.run(debug=True)
 
@@ -70,15 +88,17 @@ def startApi(db, key):
 def isThisAUser(Database, User, Password):
     pointer = Database.cursor()
 
-    Query = "select UserName_Hashed, Password_Hashed from User where UserName_Hashed = %s and Password_Hashed = %s;"
+    Query = "select ROLE from User where UserName_Hashed = %s and Password_Hashed = %s;"
 
     FinalQuery = (Query, (User, Password))
     pointer.execute(FinalQuery)
 
-    if pointer.fetchall().count > 0:
-        return True
+    answer = pointer.fetchall()
+
+    if answer.count > 0:
+         return answer
     else:
-        return False
+        return "False"
 
 
 

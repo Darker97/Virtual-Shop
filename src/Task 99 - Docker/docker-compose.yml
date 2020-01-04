@@ -24,10 +24,29 @@ services:
       - "db:database"
     image: tablescreater:0.1
 
+  # Start the API
+  # TODO: Ports zuweisen
+  API:
+    image: API_Service:0.1
+    links: "db:database"
+    ports: 
+
+  # Start the Authentication Service
+  SecurityService:
+    image: Security_Service:0.1
+    restart: always
+  
+  # ---------------------------------------------------------
+  # Start the Helpers
+
+
 
 networks:
   main:
     name: Final Assignment
+  Frontend:
+    name: Frontend
+  
 
 volumes:
   db_data: {}

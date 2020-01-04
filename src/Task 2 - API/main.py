@@ -7,7 +7,7 @@ from flask import request
 
 import ApiLogic
 import BotLogic
-import Database
+import Database_Functions
 
 # ------------------------------------------
 
@@ -65,38 +65,17 @@ def startAPI(Database):
 
 
 # ------------------------------------------
-# Control of the Process
-# Will connect to the DB and then start the API
-def main():
-    print("""
-             _____ _                    ___  ______ _____ 
-            /  ___| |                  / _ \ | ___ \_   _|
-            \ `--.| |__   ___  _ __   / /_\ \| |_/ / | |  
-             `--. \ '_ \ / _ \| '_ \  |  _  ||  __/  | |  
-            /\__/ / | | | (_) | |_) | | | | || |    _| |_ 
-            \____/|_| |_|\___/| .__/  \_| |_/\_|    \___/ 
-                              | |                         
-                              |_|                         
-    """)
 
-    try:
-        DB = Database.connection()
-        if DB.is_connected():
-            print("Connected to Database!!!")
-            print("Proceeding")
-            print("------------------------------------------------------")
-            print("\n")
-            startAPI(DB)
-    except Exception as e:
-        print("------------------------------------------------------")
-        print(e)
-        print("Proceeding...")
-        time.sleep(30)
-        print("Trying again")
-        print("------------------------------------------------------")
-        main()
-
-# ------------------------------------------
-
+print("""
+            _____ _                    ___  ______ _____ 
+        /  ___| |                  / _ \ | ___ \_   _|
+        \ `--.| |__   ___  _ __   / /_\ \| |_/ / | |  
+            `--. \ '_ \ / _ \| '_ \  |  _  ||  __/  | |  
+        /\__/ / | | | (_) | |_) | | | | || |    _| |_ 
+        \____/|_| |_|\___/| .__/  \_| |_/\_|    \___/ 
+                            | |                         
+                            |_|                         
+""")
+DB = Database_Functions.ConnectToDatabase()
 setup()
-main()
+startAPI(DB)

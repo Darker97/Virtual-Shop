@@ -81,6 +81,10 @@ def startApi(db, key):
         
         return "True"
 
+    @app.errorhandler(404)
+    def not_found(error):
+        return "Error 404 - failed successfully"
+
     app.run(debug=True)
 
 

@@ -31,30 +31,32 @@ def startAPI(Database):
     def index():
         return """ The Most efficient way to Optimize an SQL Query is to eliminate it.  """
 
+    # Question with QuestionID
     @app.route('/Data', methods=['GET'])
-    def platzhalter():
+    def QuestionWithID():
         print("GET DATA Request")
         return ApiLogic.QuestionToTheServer(request.form['SecurityCookie'], request.form['QuestionID'], Database, query)
 
+    # Question with own Script
     @app.route('/Data/Special', mehods=['GET'])
-    def platzhalter():
-        print("Special DATA GET REQUEST")
+    def QuestionWithoutID():
         return ApiLogic.SpecialQuestionToTheServer(request.form['SecurityCookie'], request.form['Data'], request.form['QuestionID'], Database, query)
 
-    @app.route('/Data', methods=['POST'])
-    def platzhalter():
-        print("POST DATA Request")
-        return ApiLogic.NewData(request.form['SecurityCookie'],request.form['Data'],request.form['DataID'], Database, query)
-
+    # Login
     @app.route('/User', methods=['GET'])
-    def platzhalter():
+    def Login():
         print("GET USER Request")
         return ApiLogic.Login(request.form['Password'], request.form['UserName'], Database, query)
 
-    @app.route('/User', methods=['POST'])
-    def platzhalter():
-        print("GET USER Request")
-        return ApiLogic.NewUser(request.form['SecurityCookie'], request.form['Data'], Database, query)
+    # Bought
+    @app.route('/Product', methods=['GET'])
+    def ProductBought():
+        return ApiLogic.ProductBought(request.form['SecurityCookie'], request.form['DATA'], Database)
+
+    # Delivered
+    @app.route('/Product', methods=['POST'])
+    def ProductDelivered():
+        return ApiLogic.Productdeliverd(request.form['SecurityCookie'], request.form['Data'], Database)
 
 
     @app.errorhandler(404)

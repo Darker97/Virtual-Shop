@@ -70,7 +70,7 @@ def startApi(db, key):
 def isThisAUser(Database, User, Password):
     pointer = Database.cursor()
 
-    Query = ""
+    Query = "select UserName_Hashed, Password_Hashed from User where UserName_Hashed = %s and Password_Hashed = %s;"
 
     FinalQuery = (Query, (User, Password))
     pointer.execute(FinalQuery)

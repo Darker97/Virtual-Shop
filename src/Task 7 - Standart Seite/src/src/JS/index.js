@@ -8,6 +8,8 @@ function login(params) {
 
     // Load Input
 
+    // HASH Input with Library: https://github.com/emn178/js-sha3
+
     // send Request to API via API.js
 
     // Check answer 

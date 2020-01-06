@@ -1,0 +1,11 @@
+{
+  "name": "siteimage",
+  "version": "1.0.0",
+  "description": "The Original Site",
+  "main": "index.html",
+  "scripts": {
+    "test": "run"
+  },
+  "author": "Christian Baltzer (Darker97)",
+  "license": "MIT"
+}

@@ -1,7 +1,7 @@
 {
-  "name": "siteimage",
+  "name": "managment",
   "version": "1.0.0",
-  "description": "The Original Site",
+  "description": "The Managment Site",
   "main": "index.html",
   "author": "Christian Baltzer (Darker97)",
   "license": "MIT",

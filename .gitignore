@@ -2,3 +2,4 @@
 *.pdf
 /Data/
 /.idea/
+*/node_modules/

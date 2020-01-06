@@ -4,8 +4,7 @@ import json
 # Sends the given Data to the API
 class ApiHelper:
     def Senddata(self, Adress, body):
-        # add SecurityCookie to body
-        body.add(login())
+        # SecurityCookie, Product, Review
 
         Adress += "/review"
 

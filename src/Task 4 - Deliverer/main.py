@@ -13,6 +13,7 @@ def setup():
 # --------------------------------------------    
 # The Time the Bot waits until next action
 waitingTime = 60
+Adress = ""
 
 # --------------------------------------------
 # start
@@ -23,7 +24,7 @@ while(True):
     Data = DataLoader.CollectData()
 
     # send Data to API
-    ApiHelper.Senddata(Data)
+    ApiHelper.Senddata(Adress, Data)
 
     # wait & repeat
     time.sleep(waitingTime)

@@ -42,7 +42,10 @@ footer{
     border-top-right-radius: 8px;
     font: comic;
     height: 100%;
-
+    margin-bottom: 0px;
+    font-size: 18px;
+    line-height: 1.8;
+    font-style: italic;
 }
 footer h2:hover{
     font-size: 170%
@@ -50,7 +53,7 @@ footer h2:hover{
   
   body > header > div > img {
     margin-right: 0px;
-    margin-left: 90%;
+    margin-left: 85%;
     width: 150px;
     position: absolute;
     top: 0px;

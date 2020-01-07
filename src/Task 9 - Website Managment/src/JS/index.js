@@ -1,4 +1,5 @@
 import * as CanvasJS from CanvasJS;
+import load from Data;
 
 /**
  * Does Everything that controlls the Website
@@ -130,21 +131,91 @@ function loadData(params) {
 }
 
 function LoadMostBrougth(params) {
+    var Link = ""
     // y, label
+    var Data = []
+    var cookie = load("Cookie")
+
+    // SecurityCookie, QuestionID
+    Message = {
+        "SecurityCookie": cookie,
+        "QuestionID": "1"
+            }
+    var rohData = Get(Link, Message)
+
+    // remake rohData
+
+    return Data
 }
 
 function LoadsRating(params) {
+    var Link = ""
     // y, label
+    var Data = []
+    var cookie = load("Cookie")
+
+    // SecurityCookie, QuestionID
+    Message = {
+        "SecurityCookie": cookie,
+        "QuestionID": "1"
+            }
+    var rohData = Get(Link, Message)
+
+    // remake rohData
+
+    return Data
 }
 
 function loadsWhatInStock(params) {
+    var Link = ""
     // y, label
+    var Data = []
+    var cookie = load("Cookie")
+
+    // SecurityCookie, QuestionID
+    Message = {
+        "SecurityCookie": cookie,
+        "QuestionID": "1"
+            }
+    var rohData = Get(Link, Message)
+
+    // remake rohData
+
+    return Data
 }
 
 function LoadsMostCommentsProduct(params) {
+    var Link = ""
     // y, label
+    var Data = []
+    var cookie = load("Cookie")
+
+    // SecurityCookie, QuestionID
+    Message = {
+        "SecurityCookie": cookie,
+        "QuestionID": "1"
+            }
+    var rohData = Get(Link, Message)
+
+    // remake rohData
+
+    return Data
 }
 
 function LoadsMostCommenstUser(params) {
+    var Link = ""
     // y, label
+    var Data = []
+    var cookie = load("Cookie")
+
+    // SecurityCookie, QuestionID
+    Message = {
+        "SecurityCookie": cookie,
+        "QuestionID": "1"
+            }
+    var rohData = Get(Link, Message)
+
+    // remake rohData
+
+    return Data
 }

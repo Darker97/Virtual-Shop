@@ -36,7 +36,7 @@ services:
     restart: always
     links: "API:API"
   
-  # Helper
+  # Start the Helpers
   HelperCustomer:
     image: HelperCustomer:0.1
     links: "API:API"
@@ -44,7 +44,6 @@ services:
   helperDeliverer:
     image: helperDeliverer:0.1
     links: "API:API"
-
 
   helperEmployer:
     image: helperEmployer:0.1
@@ -62,9 +61,6 @@ services:
 
 
 
-  
-  # ---------------------------------------------------------
-  # Start the Helpers
 
 
 

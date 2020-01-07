@@ -1,30 +1,150 @@
+import * as CanvasJS from CanvasJS;
+
 /**
  * Does Everything that controlls the Website
  */
 
-function login(params) {
+function loadCharts(params) {
 
-    //Check for Input
+    // MostBrougth
 
-    // Load Input
+    var Data = LoadMostBrougth()
 
-    // HASH Input with Library: https://github.com/emn178/js-sha3
+    var chart = new CanvasJS.Chart("MostBrougth", {
+        animationEnabled: true,
+        axisX:{
+            interval: 1
+        },
+        axisY2:{
+            interlacedColor: "rgba(1,77,101,.2)",
+            gridColor: "rgba(1,77,101,.1)",
+            title: "Number of Companies"
+        },
+        data: [{
+            type: "bar",
+            name: "companies",
+            axisYType: "secondary",
+            color: "#014D65",
+            dataPoints: Data
+        }]
+    });
+    chart.render();
 
-    // send Request to API via API.js
+    // Rating
 
-    // Check answer 
+    var Data = LoadsRating()
 
-    // Save Answer as Cookie
+    var chart = new CanvasJS.Chart("Rating", {
+        animationEnabled: true,
+        axisX:{
+            interval: 1
+        },
+        axisY2:{
+            interlacedColor: "rgba(1,77,101,.2)",
+            gridColor: "rgba(1,77,101,.1)",
+            title: "Number of Companies"
+        },
+        data: [{
+            type: "bar",
+            name: "companies",
+            axisYType: "secondary",
+            color: "#014D65",
+            dataPoints: Data
+        }]
+    });
+    chart.render();
+
+    // WhatInStock
+    var Data = loadsWhatInStock()
+
+    var chart = new CanvasJS.Chart("WhatInStock", {
+        animationEnabled: true,
+        axisX:{
+            interval: 1
+        },
+        axisY2:{
+            interlacedColor: "rgba(1,77,101,.2)",
+            gridColor: "rgba(1,77,101,.1)",
+            title: "Number of Companies"
+        },
+        data: [{
+            type: "bar",
+            name: "companies",
+            axisYType: "secondary",
+            color: "#014D65",
+            dataPoints: Data
+        }]
+    });
+    chart.render();
+
+    // MostCommentsProduct
+    var Data = LoadsMostCommentsProduct()
+
+    var chart = new CanvasJS.Chart("MostCommentsProduct", {
+        animationEnabled: true,
+        axisX:{
+            interval: 1
+        },
+        axisY2:{
+            interlacedColor: "rgba(1,77,101,.2)",
+            gridColor: "rgba(1,77,101,.1)",
+            title: "Number of Companies"
+        },
+        data: [{
+            type: "bar",
+            name: "companies",
+            axisYType: "secondary",
+            color: "#014D65",
+            dataPoints: Data
+        }]
+    });
+    chart.render();
+
+    // MostCommenstUser
+    var Data = LoadsMostCommenstUser()
+
+    var chart = new CanvasJS.Chart("MostCommenstUser", {
+        animationEnabled: true,
+        axisX:{
+            interval: 1
+        },
+        axisY2:{
+            interlacedColor: "rgba(1,77,101,.2)",
+            gridColor: "rgba(1,77,101,.1)",
+            title: "Number of Companies"
+        },
+        data: [{
+            type: "bar",
+            name: "companies",
+            axisYType: "secondary",
+            color: "#014D65",
+            dataPoints: Data
+        }]
+    });
+    chart.render();
     
 }
 
 function loadData(params) {
 
+}
 
-    // Load Data
+function LoadMostBrougth(params) {
+    // y, label
+}
 
-    // Check for Cookie
+function LoadsRating(params) {
+    // y, label
+}
 
-    // if Cookie is there, load special Data
-    
+function loadsWhatInStock(params) {
+    // y, label
+}
+
+function LoadsMostCommentsProduct(params) {
+    // y, label
+}
+
+function LoadsMostCommenstUser(params) {
+    // y, label
 }

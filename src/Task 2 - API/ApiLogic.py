@@ -2,6 +2,7 @@ import security
 import Database
 import Authentication_Service
 import mysql.connector as mysql
+import random
 
 # ------------------------------------------
 # API logic - Everything the API will do
@@ -135,10 +136,13 @@ class ApiLogic:
         if role != "helper":
             return "Error - User not allowed"
         
-        rating = 0
+        Customers_ID_Query = """ """
+        Products_ID_Query = """ select ID from Shop.Products where Name = %s"""
+
+        rating = random.randint(0,5)
         body = Review
-        Customers_ID = 0
-        Products_ID = 0
+        Customers_ID = "3"
+        Products_ID = sendQuery((Products_ID_Query,(Product)), Database)
 
         # send query
         Query = """ INSERT INTO `Shop`.`Comments` (`Body`, `Rating`, `Customers_ID`, `Products_ID`) VALUES (%s, %s, %s, %s); """

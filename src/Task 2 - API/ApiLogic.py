@@ -122,6 +122,28 @@ class ApiLogic:
         FinalQuery = (Query, (Data['Products_ID'], "delivered",Data['ID']))
         sendQuery(FinalQuery, Database)
 
+    # Review made
+    def Review(self, SecurityCookie, Product, Review, Database):
+        adress = ""
+        body = """ { "Token" = %s } """
+
+        finalbody = (body (SecurityCookie))
+
+        # Role Of The User
+        role = Authentication_Service.sendMessage(adress, finalbody)
+
+        if role != "helper":
+            return "Error - User not allowed"
+        
+        rating = 0
+        body = Review
+        Customers_ID = 0
+        Products_ID = 0
+
+        # send query
+        Query = """ INSERT INTO `Shop`.`Comments` (`Body`, `Rating`, `Customers_ID`, `Products_ID`) VALUES (%s, %s, %s, %s); """
+        FinalQuery = (Query, (body, rating, Customers_ID, Products_ID))
+        sendQuery(FinalQuery, Database)
 
 
     def queryloader(self):

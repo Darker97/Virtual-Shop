@@ -58,6 +58,10 @@ def startAPI(Database):
     def ProductDelivered():
         return ApiLogic.Productdeliverd(request.form['SecurityCookie'], request.form['Data'], Database)
 
+    #review
+    @app.route('/review', methods=['get'])
+    def ReviewMade():
+        return ApiLogic.Review(request.form['SecurityCookie'], request.form['Product'], request.form['Review'], Database)
 
     @app.errorhandler(404)
     def not_found(error):

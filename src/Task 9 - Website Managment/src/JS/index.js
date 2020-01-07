@@ -126,10 +126,6 @@ function loadCharts(params) {
     
 }
 
-function loadData(params) {
-
-}
-
 function LoadMostBrougth(params) {
     var Link = ""
     // y, label

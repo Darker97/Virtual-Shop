@@ -153,7 +153,7 @@ function LoadsRating(params) {
     // SecurityCookie, QuestionID
     Message = {
         "SecurityCookie": cookie,
-        "QuestionID": "1"
+        "QuestionID": "2"
             }
     var rohData = Get(Link, Message)
 
@@ -171,7 +171,7 @@ function loadsWhatInStock(params) {
     // SecurityCookie, QuestionID
     Message = {
         "SecurityCookie": cookie,
-        "QuestionID": "1"
+        "QuestionID": "3"
             }
     var rohData = Get(Link, Message)
 
@@ -189,7 +189,7 @@ function LoadsMostCommentsProduct(params) {
     // SecurityCookie, QuestionID
     Message = {
         "SecurityCookie": cookie,
-        "QuestionID": "1"
+        "QuestionID": "4"
             }
     var rohData = Get(Link, Message)
 
@@ -207,7 +207,7 @@ function LoadsMostCommenstUser(params) {
     // SecurityCookie, QuestionID
     Message = {
         "SecurityCookie": cookie,
-        "QuestionID": "1"
+        "QuestionID": "5"
             }
     var rohData = Get(Link, Message)
 

@@ -35,6 +35,23 @@ services:
   SecurityService:
     image: Security_Service:0.1
     restart: always
+    links: "API:API"
+  
+  # Helper
+  HelperCustomer:
+
+  helperDeliverer:
+
+  helperEmployer:
+
+  # Website 1
+  StandartWebpage:
+
+  # Website 2
+  ManagerWebpage:
+
+
+
   
   # ---------------------------------------------------------
   # Start the Helpers

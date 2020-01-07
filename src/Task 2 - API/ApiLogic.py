@@ -2,6 +2,7 @@ import security
 import Database
 import Authentication_Service
 import mysql.connector as mysql
+import random
 
 # ------------------------------------------
 # API logic - Everything the API will do
@@ -122,6 +123,31 @@ class ApiLogic:
         FinalQuery = (Query, (Data['Products_ID'], "delivered",Data['ID']))
         sendQuery(FinalQuery, Database)
 
+    # Review made
+    def Review(self, SecurityCookie, Product, Review, Database):
+        adress = ""
+        body = """ { "Token" = %s } """
+
+        finalbody = (body (SecurityCookie))
+
+        # Role Of The User
+        role = Authentication_Service.sendMessage(adress, finalbody)
+
+        if role != "helper":
+            return "Error - User not allowed"
+        
+        Customers_ID_Query = """ """
+        Products_ID_Query = """ select ID from Shop.Products where Name = %s"""
+
+        rating = random.randint(0,5)
+        body = Review
+        Customers_ID = "3"
+        Products_ID = sendQuery((Products_ID_Query,(Product)), Database)
+
+        # send query
+        Query = """ INSERT INTO `Shop`.`Comments` (`Body`, `Rating`, `Customers_ID`, `Products_ID`) VALUES (%s, %s, %s, %s); """
+        FinalQuery = (Query, (body, rating, Customers_ID, Products_ID))
+        sendQuery(FinalQuery, Database)
 
 
     def queryloader(self):

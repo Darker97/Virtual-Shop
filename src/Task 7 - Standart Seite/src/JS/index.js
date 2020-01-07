@@ -4,19 +4,12 @@
 console.log('test')
 console.log(document.getElementById('username1').innerText + ' yep')
 login()
-function login () {
+function login () { //script on load login in html!!
   // Check for Input
   // let button = document.getElementsByTagName('button')
-  document.getElementById('button1').addEventListener('click', loadInput) 
-  
-//   {
-//     // loadInput()
-//     let username = document.getElementById('username1').innerText
-//     let password = document.getElementById('password1').innerText
-//     console.log(username)
-//     console.log('test2')
-//     console.log(password)
-//   })
+  document.getElementById('button1').addEventListener('click', function () {
+    loadInput()
+  })
 
   // Load Input
   function loadInput () {
@@ -24,6 +17,7 @@ function login () {
     let password = document.getElementById('password1').value
     console.log(username)
     console.log(password)
+    return [username, password]
   }
 
   // HASH Input with Library: https://github.com/emn178/js-sha3

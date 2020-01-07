@@ -2,14 +2,12 @@
  * Does everything containing the API
  */
 
-function getStandartData(){
+function getStandartData () {
 
 }
 
-function specialData(params) {
-    
+function specialData (params) {
 }
 
-function login(params) {
-    
+function login (params) {
 }

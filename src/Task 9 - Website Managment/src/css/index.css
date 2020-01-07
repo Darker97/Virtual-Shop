@@ -1,50 +1,70 @@
-body{
-    padding-top: 2%;
-    padding-left: 2%;
-    padding-right: 2%;
-    padding-bottom: 2%;
-}
 main{
-    background-color: gray;
-    padding-left: 2%;
-    padding-right: 2%;
-    border-radius: 20px;
-    padding-top: 1%;
-    padding-bottom: 1%;
+    display: inline-grid;
+    font-size: 17px;
+    letter-spacing: 0.051em;
+    padding-left: 0px;
+    padding-right: 0px;
+    background-color: #e3e2e2d1;
+    border-radius: 8px;
+
+    margin-left: 15px;
+    width: 1300px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    text-align: center;
 }
 
-main div{
-    background-color: rgb(194, 189, 189);
-    border-radius: 10px;
-    padding-left: 1%;
-    padding-right:1%;
-    padding-top: 0.01%;
-    padding-bottom: 0.01%;
-    width: 350px;
+bubble{
+    background-color: #c4c4c4;
+    width: 850px;
+    text-align: center;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 8px;
+    display: inline-block;
+    border-style: solid;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    width: 1250px;
+    margin-left: 10px;
+    margin-top: 2px;
+    margin-bottom: 2px;
 }
 
-header img{
-    padding-left: 75%;
-    width: 200px;
-    margin-top: -10%;
-    
-}
 
-header form{
-    padding-bottom: 2%;
-    padding-top: 2%;
-    width: 1000px;
-    margin-top: -5%;
-}
+footer{
+    text-align: center;
+    background-color: rgb(85, 85, 85);
+    font-style: sans;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    font: comic;
+    height: 100%;
 
-header h1{
-    margin:0; 
-    width: 1000px;
-    font-size: 44px;
 }
-header h2{
-    width: 1000px;
+footer h2:hover{
+    font-size: 170%
 }
-main h2{
-    font-size: 21px;
-}
+  
+  body > header > div > img {
+    margin-right: 0px;
+    margin-left: 90%;
+    width: 150px;
+    position: absolute;
+    top: 0px;
+  }
+  
+  body > header > h2 {
+    width: 800px;
+    font-size: 29px;
+    font-style: italic;
+  }
+  
+  body > header > h1 {
+    width: 800px;
+    font-size: 37px;
+  }
+  
+

@@ -17,7 +17,7 @@ class Database_Functions:
             time.sleep(30)
             print("Trying again")
             print("------------------------------------------------------")
-            ConnectToDatabase()
+            Database_Functions.ConnectToDatabase()
 
 
     # connects to the Database

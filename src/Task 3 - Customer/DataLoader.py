@@ -6,8 +6,6 @@ import json
 class DataLoader:
     def CollectData(Adress):
         # Product Suchen
-
-
         # nächster Kommentar
 
         # return Data

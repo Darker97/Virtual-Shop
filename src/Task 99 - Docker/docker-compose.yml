@@ -57,6 +57,11 @@ services:
       - "API:API"
   
 
+  helperEmployer:
+    image: helperemployer:0.1
+    links: 
+      - "API:API"
+
 
 volumes:
   db_data: {}

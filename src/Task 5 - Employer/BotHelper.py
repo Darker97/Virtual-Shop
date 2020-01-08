@@ -1,5 +1,6 @@
 
 
 class BotHelper:
-    def ConnectToBot(self, Message):
+    def ConnectToBot(Message):
+        print("Message")
         pass

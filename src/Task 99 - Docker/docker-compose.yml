@@ -39,10 +39,18 @@ services:
   # Start the Authentication Service
   SecurityService:
     image: securityservice:0.1
+    restart: always
     links: 
       - "db:database"
 
-
+  # -------------------------------------------
+  # Helper
+  # Start the Helpers
+  helpercustomer:
+    image: helpercustomer:0.1
+    links: 
+      - "API:API"
+  
 
 
 volumes:

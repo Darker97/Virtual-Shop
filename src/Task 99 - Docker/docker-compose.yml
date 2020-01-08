@@ -13,7 +13,7 @@ services:
       MYSQL_ROOT_HOST: '%'
       # MYSQL_ROOT_HOST: 0.0.0.0/255.255.255.248
     volumes:
-      - Final Assignment:/var/lib/mysql
+      - db_data:/var/lib/mysql
     restart: always
     ports:
       - "3308:3306"
@@ -24,52 +24,9 @@ services:
       - "db:database"
     image: tablescreater:0.1
 
-  # Start the API
-  # TODO: Ports zuweisen
-  API:
-    image: API_Service:0.1
-    links: "db:database"
-
-  # Start the Authentication Service
-  SecurityService:
-    image: Security_Service:0.1
-    restart: always
-    links: "API:API"
-  
-  # Start the Helpers
-  HelperCustomer:
-    image: HelperCustomer:0.1
-    links: "API:API"
-
-  helperDeliverer:
-    image: helperDeliverer:0.1
-    links: "API:API"
-
-  helperEmployer:
-    image: helperEmployer:0.1
-    links: "API:API"
-
-  # Website 1
-  StandartWebpage:
-    image: StandartWebpage:0.1
-    links: "API:API"
-
-  # Website 2
-  ManagerWebpage:
-    image: ManagerWebpage:0.1
-    links: "API:API"
 
 
 
-
-
-
-networks:
-  main:
-    name: Final Assignment
-  Frontend:
-    name: Frontend
-  
 
 volumes:
   db_data: {}

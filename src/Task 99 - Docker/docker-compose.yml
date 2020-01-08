@@ -50,6 +50,11 @@ services:
     image: helpercustomer:0.1
     links: 
       - "API:API"
+
+  helperDeliverer:
+    image: helperdeliverer:0.1
+    links: 
+      - "API:API"
   
 
 

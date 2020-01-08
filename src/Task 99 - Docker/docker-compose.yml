@@ -36,6 +36,7 @@ services:
       - "SecurityService:Securityapi"
     ports: 
       - "5000:5000"
+    restart: always
 
   # Start the Authentication Service
   SecurityService:

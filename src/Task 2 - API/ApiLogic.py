@@ -1,5 +1,4 @@
-import security
-import Database
+from Database_Functions import Database_Functions
 import Authentication_Service
 import mysql.connector as mysql
 import random
@@ -7,10 +6,10 @@ import random
 # ------------------------------------------
 # API logic - Everything the API will do
 class ApiLogic:
-
+    adress = "SecurityService:5000"
     # Question with QuestionID
-    def QuestionToTheServer(self, SecurityCookie, QuestionID, Database, query):
-        adress = ""
+    def QuestionToTheServer( SecurityCookie, QuestionID, Database, query):
+        
         body = """ { "Token" = %s } """
 
         finalbody = (body (SecurityCookie))
@@ -39,9 +38,8 @@ class ApiLogic:
 
 
     # Question with own Script
-    def SpecialQuestionToTheServer(self, SecurityCookie ,Query, Database):
+    def SpecialQuestionToTheServer( SecurityCookie ,Query, Database):
         # Role of The User
-        adress = ""
         body = """ { "Token" = %s } """
 
         finalbody = (body (SecurityCookie))
@@ -72,8 +70,7 @@ class ApiLogic:
 
 
     # Login
-    def Login(self, Password, UserName):
-        adress = ""
+    def Login( Password, UserName):
         body = """{"User" = %s,
             "Password" = %s}"""
 
@@ -83,9 +80,8 @@ class ApiLogic:
         
 
     # Bought
-    def ProductBought(self, SecurityCookie, Data, Database):
+    def ProductBought( SecurityCookie, Data, Database):
         # check Role
-        adress = ""
         body = """ { "Token" = %s } """
 
         finalbody = (body (SecurityCookie))
@@ -104,9 +100,8 @@ class ApiLogic:
         sendQuery(FinalQuery, Database)
 
     # Delivered
-    def ProductDelivered(self, SecurityCookie, Data, Database):
+    def ProductDelivered( SecurityCookie, Data, Database):
         # Role of The User
-        adress = ""
         body = """ { "Token" = %s } """
 
         finalbody = (body (SecurityCookie))
@@ -124,8 +119,7 @@ class ApiLogic:
         sendQuery(FinalQuery, Database)
 
     # Review made
-    def Review(self, SecurityCookie, Product, Review, Database):
-        adress = ""
+    def Review( SecurityCookie, Product, Review, Database):
         body = """ { "Token" = %s } """
 
         finalbody = (body (SecurityCookie))
@@ -150,12 +144,12 @@ class ApiLogic:
         sendQuery(FinalQuery, Database)
 
 
-    def queryloader(self):
+    def queryloader():
         File = open("query.sql")
         query = File.readlines()
         return query
 
-    def sendQuery(self, Query, Database):
+    def sendQuery( Query, Database):
         Cursor = Database.cursor()
         Cursor.execute(Query)
         return Cursor.fetchall()

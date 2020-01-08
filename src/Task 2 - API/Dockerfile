@@ -5,6 +5,6 @@ RUN pip3 install mysql.connector
 RUN pip3 install tqdm
 RUN pip3 install names
 RUN pip3 install flask
-RUN pip3 install random
+RUN pip3 install requests
 
 CMD [ "python3", "-u","./main.py" ]

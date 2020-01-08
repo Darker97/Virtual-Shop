@@ -2,12 +2,12 @@ import atexit
 import time
 import mysql.connector as mysql
 
-import flask as Flask
+from flask import Flask
 from flask import request
 
-import ApiLogic
-import BotLogic
-import Database_Functions
+from ApiLogic import ApiLogic
+from BotLogic import BotLogic
+from Database_Functions import Database_Functions
 
 # ------------------------------------------
 
@@ -23,7 +23,7 @@ def exit():
 # ------------------------------------------
 # API - The Paths of the API
 def startAPI(Database):
-    app = Flask("API")
+    app = Flask("Api")
 
     query = ApiLogic.queryloader()
 
@@ -38,7 +38,7 @@ def startAPI(Database):
         return ApiLogic.QuestionToTheServer(request.form['SecurityCookie'], request.form['QuestionID'], Database, query)
 
     # Question with own Script
-    @app.route('/Data/Special', mehods=['GET'])
+    @app.route('/Data/Special', methods=['GET'])
     def QuestionWithoutID():
         return ApiLogic.SpecialQuestionToTheServer(request.form['SecurityCookie'], request.form['Data'], request.form['QuestionID'], Database, query)
 
@@ -59,7 +59,7 @@ def startAPI(Database):
         return ApiLogic.Productdeliverd(request.form['SecurityCookie'], request.form['Data'], Database)
 
     #review
-    @app.route('/review', methods=['get'])
+    @app.route('/review', methods=['GET'])
     def ReviewMade():
         return ApiLogic.Review(request.form['SecurityCookie'], request.form['Product'], request.form['Review'], Database)
 
@@ -67,13 +67,13 @@ def startAPI(Database):
     def not_found(error):
         return "Error 404 - I'm a Teapot"
 
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0')
 
 
 # ------------------------------------------
 
 print("""
-            _____ _                    ___  ______ _____ 
+         _____ _                    ___  ______ _____ 
         /  ___| |                  / _ \ | ___ \_   _|
         \ `--.| |__   ___  _ __   / /_\ \| |_/ / | |  
             `--. \ '_ \ / _ \| '_ \  |  _  ||  __/  | |  

@@ -24,6 +24,22 @@ services:
       - "db:database"
     image: tablescreater:0.1
 
+    
+  
+    
+  # Start the API
+  # TODO: Ports zuweisen
+  API:
+    image: apiservice:0.1
+    links: 
+      - "db:database"
+      - "SecurityService:Securityapi"
+    ports: 
+      - "5000:5000"
+
+  # Start the Authentication Service
+  SecurityService:
+    image: securityservice:0.1
 
 
 

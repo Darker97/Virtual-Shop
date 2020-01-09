@@ -1,6 +1,4 @@
-
-
-import {headline} from './UI'
+import { headline } from './UI.js'
 //import * as all from './UI'
 //import { footer } from './UI'
 

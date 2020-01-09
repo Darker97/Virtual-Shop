@@ -10,13 +10,14 @@ class ApiLogic:
     # Question with QuestionID
     def QuestionToTheServer( SecurityCookie, QuestionID, Database, query):
         
-        body = """ { "Token" = %s } """
+        # body = """ { "Token" = %s } """
 
-        finalbody = (body (SecurityCookie))
+        # finalbody = (body (SecurityCookie))
 
 
         # Role Of The User
-        role = Authentication_Service.sendMessage(adress, finalbody)
+        # role = Authentication_Service.sendMessage(adress, finalbody)
+        role = "Test"
 
         if role == "False":
             return "Error - User not allowed"
@@ -28,23 +29,30 @@ class ApiLogic:
         if (role == "customer") and (QuestionID >= 5):
             return "Error - Not allowed"
 
+
+        answer = ""
         # send query
-        answer = sendQuery(query[QuestionID])
+        try:
+            answer = sendQuery(query[QuestionID])
+        except Exception as e:
+            answer = "SQL ERROR"
 
         # return result
-        return answer
+        return answer, 200
 
 
     # Question with own Script
     def SpecialQuestionToTheServer( SecurityCookie ,Query, Database):
         # Role of The User
-        body = """ { "Token" = %s } """
+        # body = """ { "Token" = %s } """
 
-        finalbody = (body (SecurityCookie))
+        # finalbody = (body (SecurityCookie))
 
 
         # Role Of The User
-        role = Authentication_Service.sendMessage(adress, finalbody)
+        # role = Authentication_Service.sendMessage(adress, finalbody)
+
+        role = "admin"
 
         if role == "False":
             return "Error - User not allowed"
@@ -80,14 +88,15 @@ class ApiLogic:
     # Bought
     def ProductBought( SecurityCookie, Data, Database):
         # check Role
-        body = """ { "Token" = %s } """
+        # body = """ { "Token" = %s } """
 
-        finalbody = (body (SecurityCookie))
+        # finalbody = (body (SecurityCookie))
 
 
         # Role Of The User
-        role = Authentication_Service.sendMessage(adress, finalbody)
-
+        # role = Authentication_Service.sendMessage(adress, finalbody)
+        role = "helper"
+        
         if role != "helper":
             return "Error - User not allowed"
 
@@ -100,13 +109,15 @@ class ApiLogic:
     # Delivered
     def ProductDelivered( SecurityCookie, Data, Database):
         # Role of The User
-        body = """ { "Token" = %s } """
+        # body = """ { "Token" = %s } """
 
-        finalbody = (body (SecurityCookie))
+        # finalbody = (body (SecurityCookie))
 
 
         # Role Of The User
-        role = Authentication_Service.sendMessage(adress, finalbody)
+        # role = Authentication_Service.sendMessage(adress, finalbody)
+
+        role = "helper"
 
         if role != "helper":
             return "Error - User not allowed"
@@ -118,12 +129,14 @@ class ApiLogic:
 
     # Review made
     def Review( SecurityCookie, Product, Review, Database):
-        body = """ { "Token" = %s } """
+        # body = """ { "Token" = %s } """
 
-        finalbody = (body (SecurityCookie))
+        # finalbody = (body (SecurityCookie))
 
         # Role Of The User
-        role = Authentication_Service.sendMessage(adress, finalbody)
+        # role = Authentication_Service.sendMessage(adress, finalbody)
+
+        role = "helper"
 
         if role != "helper":
             return "Error - User not allowed"

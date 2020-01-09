@@ -9,7 +9,7 @@ class ApiHelper:
         Adress += "/Product"
 
         # put request
-        sended = requests.get(Adress, params=body)
+        sended = requests.get(Adress, data=body)
         return sended.json()
 
     def login(Adress):
@@ -31,4 +31,4 @@ class ApiHelper:
         finalBody = body, (Username, password)
         params = {"password": password, "UserName": Username}
 
-        return requests.get(Adress, params= params)
+        return requests.get(Adress, Data= params)

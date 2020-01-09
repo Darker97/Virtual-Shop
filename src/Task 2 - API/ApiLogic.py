@@ -1,5 +1,5 @@
 from Database_Functions import Database_Functions
-import Authentication_Service
+from Authentication_Service import Authentication_service
 import mysql.connector as mysql
 import random
 
@@ -32,10 +32,12 @@ class ApiLogic:
 
         answer = ""
         # send query
+        temp = int(QuestionID)
+        finalQuery = query[temp]
         try:
-            answer = sendQuery(query[QuestionID])
+            answer = ApiLogic.sendQuery(finalQuery, Database)
         except Exception as e:
-            answer = "SQL ERROR"
+            answer = "SQL ERROR " + str(e)
 
         # return result
         return answer, 200
@@ -69,20 +71,17 @@ class ApiLogic:
             return "ERROR - Injection!"
 
         # send query
-        answer = sendQuery(Query)
+        answer = ApiLogic.sendQuery(Query)
 
         # return result
-        return answer
+        return answer, 200
 
 
     # Login
     def Login( Password, UserName):
-        body = """{"User" = %s,
-            "Password" = %s}"""
-
-        finalbody = (body, (UserName, Password))
-
-        return Authentication_Service.sendMessage(adress, finalbody)
+        adress = "/security/login"
+        body = {"User": UserName, "Password": Password}
+        return Authentication_Service.sendMessage(adress, body)
         
 
     # Bought
@@ -100,14 +99,24 @@ class ApiLogic:
         if role != "helper":
             return "Error - User not allowed"
 
+        Product = Data
+        ID = 0
 
         # send query        
-        Query = """INSERT INTO `Shop`.`Transactions` (`Products_ID`, `Type`, `ID`) VALUES (%s, %s, %s); """
-        FinalQuery = (Query, (Data['Products_ID'], "bought",Data['ID']))
-        sendQuery(FinalQuery, Database)
+        Query = """INSERT INTO Shop.Transactions (Products_ID, Type, ID) VALUES (%s, %s, %s); """
+        FinalQuery = Product, "bought", ID
+
+        try:
+            Database.cursor().execute(Query ,FinalQuery)
+            Database.commit()
+        except Exception as e:
+            return(str(e))
+
+        return "Success"
+
 
     # Delivered
-    def ProductDelivered( SecurityCookie, Data, Database):
+    def Productdeliverd( SecurityCookie, Data, Database):
         # Role of The User
         # body = """ { "Token" = %s } """
 
@@ -122,10 +131,21 @@ class ApiLogic:
         if role != "helper":
             return "Error - User not allowed"
         
+        Product = Data
+        ID = 0
+
         # send query
-        Query = """INSERT INTO `Shop`.`Transactions` (`Products_ID`, `Type`, `ID`) VALUES (%s, %s, %s); """
-        FinalQuery = (Query, (Data['Products_ID'], "delivered",Data['ID']))
-        sendQuery(FinalQuery, Database)
+        Query = "INSERT INTO Shop.Transactions (Products_ID, Type, ID) VALUES (%s, %s, %s);"
+
+        FinalQuery = Product, "delivered", ID
+
+        try:
+            Database.cursor().execute(Query ,FinalQuery)
+            Database.commit()
+        except Exception as e:
+            return(str(e))
+
+        return "Success"
 
     # Review made
     def Review( SecurityCookie, Product, Review, Database):
@@ -147,12 +167,12 @@ class ApiLogic:
         rating = random.randint(0,5)
         body = Review
         Customers_ID = "3"
-        Products_ID = sendQuery((Products_ID_Query,(Product)), Database)
+        Products_ID = ApiLogic.sendQuery((Products_ID_Query,(Product)), Database)
 
         # send query
-        Query = """ INSERT INTO `Shop`.`Comments` (`Body`, `Rating`, `Customers_ID`, `Products_ID`) VALUES (%s, %s, %s, %s); """
+        Query = """ INSERT INTO Shop.Comments (Body, Rating, Customers_ID, Products_ID) VALUES (%s, %s, %s, %s); """, (body, rating, Customers_ID, Products_ID)
         FinalQuery = (Query, (body, rating, Customers_ID, Products_ID))
-        sendQuery(FinalQuery, Database)
+        return ApiLogic.sendQuery(Query, Database)
 
 
     def queryloader():
@@ -162,5 +182,14 @@ class ApiLogic:
 
     def sendQuery( Query, Database):
         Cursor = Database.cursor()
-        Cursor.execute(Query)
-        return Cursor.fetchall()
+        try:
+            Cursor.execute(Query)
+        except Exception as e:
+            return str(e)
+        
+        Database.commit()
+        Cursor = Cursor.fetchall()
+        array = []
+        for each in Cursor:
+            array.append(str(each))
+        return str(array)

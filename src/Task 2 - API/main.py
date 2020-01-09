@@ -40,25 +40,25 @@ def startAPI(Database):
     # Question with own Script
     @app.route('/Data/Special', methods=['GET'])
     def QuestionWithoutID():
-        answer = ApiLogic.SpecialQuestionToTheServer(request.form['SecurityCookie'], request.form['Data'], request.form['QuestionID'], Database, query)
+        answer = ApiLogic.SpecialQuestionToTheServer(request.form['SecurityCookie'], request.form['Data'], Database, query)
         return answer
 
     # Login
     @app.route('/User', methods=['GET'])
     def Login():
-        answer = ApiLogic.Login(request.form['Password'], request.form['UserName'], Database, query)
-        return answer
+        # answer = ApiLogic.Login(request.form['Password'], request.form['UserName'])
+        return "yo"
 
     # Bought
     @app.route('/Product', methods=['GET'])
     def ProductBought():
-        answer = ApiLogic.ProductBought(request.form['SecurityCookie'], request.form['DATA'], Database)
+        answer = ApiLogic.ProductBought(request.form['SecurityCookie'], request.form['Product'], Database)
         return answer
 
     # Delivered
     @app.route('/Product', methods=['POST'])
     def ProductDelivered():
-        answer = ApiLogic.Productdeliverd(request.form['SecurityCookie'], request.form['Data'], Database)
+        answer = ApiLogic.Productdeliverd(request.form['SecurityCookie'], request.form['Product'], Database)
         return answer
 
     #review

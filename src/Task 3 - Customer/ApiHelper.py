@@ -26,9 +26,6 @@ class ApiHelper:
         Adress += "/User"
 
         #UserName, Password
-        body = """{ "UserName" = %s, "Password" = %s }"""
+        params = {"Password": password, "UserName": Username}
 
-        finalBody = body, (Username, password)
-        params = {"password": password, "UserName": Username}
-
-        return requests.get(Adress, Data= params)
+        return requests.get(Adress, data= params)

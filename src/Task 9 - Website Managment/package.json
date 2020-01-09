@@ -27,7 +27,7 @@
   },
   "scripts": {
     "debug": "webpack-dev-server",
-    "start": "webpack-dev-server",
+    "start": "webpack-dev-server --port 8080 --hot --host 0.0.0.0",
     "build": "webpack"
   },
   "standard": {

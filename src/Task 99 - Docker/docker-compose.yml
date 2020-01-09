@@ -62,6 +62,24 @@ services:
     links: 
       - "API:API"
 
+  # -------------------------------------------
+  # Webpage
+  StandartWebpage:
+    image: standartwebpage:0.1
+    links: 
+      - "API:API"
+    ports: 
+      - "8080:8080"
+    command: npm start
+
+  AdminWebpage:
+    image: adminwebpage:0.1
+    links: 
+      - "API:API"
+    ports: 
+      - "8081:8080"
+    command: npm start
+
 
 volumes:
   db_data: {}

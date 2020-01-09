@@ -1,15 +1,13 @@
-import gpg as gpg
-import flask as Flask
 from flask import request
 from flask import Flask
 import datetime
 import json
 
-import GPG_Functions
-import Database_Functions
+from GPG_Functions import GPG_Functions
+from Database_Functions import Database_Functions
 
 # all api Functions
-def startApi(db, key):
+def startApi(db, privatekey , publickey):
     print("Starting API")
 
     app = Flask("SecApi")
@@ -26,7 +24,7 @@ def startApi(db, key):
         return "FSOCIETY.dat"
 
     # Checks if the User is there and sends a Token
-    @app.route('/security/login')
+    @app.route('/security/login', methods=['GET'])
     def login():
         User = request.form['User']
         Password = request.form['Password']
@@ -46,33 +44,33 @@ def startApi(db, key):
             FinalToken = (Token, (User, Password, role, Timestamp))
             json.dumps(FinalToken)
 
-            # sign with public
-            Token = GPG_Functions.sign(gpg.export_keys(key), Token)
             # encrypt with private
-            Token = GPG_Functions.Encryptor(gpg.export_key(key,True), Token)
+            Token = GPG_Functions.Encryptor( privatekey, Token)
+
             return Token
         else:
             return "ERROR"
 
     # checks if its our Token and returns the role if yes.
-    @app.route('/securtiy/check')
+    @app.route('/securtiy/check', methods=['GET'])
     def check():
         Token = request.form['Token']
 
         # Decrypt with public
-        Token = GPG_Functions.Decryptor(gpg.export_keys(key), Token)#
-        # verify with privat
-        if GPG_Functions.verify(gpg.export_key(key,True), Token):
+        Token = GPG_Functions.Decryptor( publickey, Token)
+
+        try:
             return Token["Role"]
-        else:
+        except Exception as e:
             return "False"
+            
 
     # Checks if the given question contains a Word that leds to SQL Injections.
-    @app.route('/security/injection')
+    @app.route('/security/injection', methods=['GET'])
     def checkForInjection():
         question = request.form['question']
 
-        File = open("InjectionList.txt")
+        File = open("./src/InjectionList.txt")
         WordList = File.readlines()
 
         for Word in WordList:
@@ -85,7 +83,7 @@ def startApi(db, key):
     def not_found(error):
         return "Error 404 - failed successfully"
 
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0')
 
 
 # Is the given User Valid?
@@ -121,8 +119,8 @@ print("""
 print("------------------------------------------")
 print("Creating new Keys and connecting to Database")
 print("\n")
-key = GPG_Functions.createKeys()
+privatekey , publickey = GPG_Functions.createKeys()
 DB = Database_Functions.ConnectToDatabase()
 print("------------------------------------------")
 print("\n")
-startApi(DB, key)
+startApi(DB, privatekey , publickey)

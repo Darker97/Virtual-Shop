@@ -4,6 +4,106 @@ import time
 from tqdm import tqdm
 import names
 import hashlib
+import random
+
+
+# Loads the Tables
+def LoadingTables(Connection):
+    File = open("./Querys/Table_query.sql")
+    Querys = File.readlines()
+    for action in tqdm(Querys, desc="Loading Tables"):
+        Connection.execute(action)
+
+# Loads the Products
+def LoadingProducts(Connection):
+    File = open ("./Querys/Product_DATA")
+    Data = File.readlines()
+    ID = 1
+
+    insertQuery =  """INSERT INTO Shop.Products (ID, Name, Description, Calories, Protein, Fat, Sodium, Fiber, Carbo, Sugar, Vitamins, Price) 
+                        VALUES (%s, %s,  %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"""
+    for data in tqdm(Data, desc="Loading Products"):
+        decrypted = json.loads(data)
+
+        IA = str(ID)
+        Name = str(decrypted["name"])
+        ProductNumber = IA
+        Description = " "
+        Calories = str(decrypted["calories"])
+        Protein = str(decrypted["protein"])
+        Fat = str(decrypted["fat"])
+        Sodium = str(decrypted["sodium"])
+        Fiber = str(decrypted["fiber"])
+        Carbo = str(decrypted["carbo"])
+        Sugar = str(decrypted["sugars"])
+        Vitamins = str(decrypted["vitamins"])
+        Price = str(random.randint(1,10))
+
+        args = IA, Name, Description, Calories, Protein, Fat, Sodium, Fiber, Carbo, Sugar, Vitamins, Price
+        # FinalQuery = (insertQuery ,(str(ID), Name, ProductNumber, Description, Calories, Protein, Fat, Sodium, Fiber, Carbo, Sugar, Vitamins, Price, ))
+        try:
+            Connection.cursor().execute(insertQuery ,args)
+            Connection.commit()
+        except Exception as e:
+            print(e)
+
+        ID += 1
+
+# Loads random Customers
+def LoadingCustomers(Connection):
+    insertQuery =  """INSERT INTO Shop.Customers (ID, Name, Surname, username) 
+                        VALUES (%s, %s, %s, %s);  """
+    x = range(300)
+    for i in tqdm(x, desc="Generating Customers"):
+        Name = names.get_first_name()
+        surname = names.get_last_name()
+        username = Name+surname
+
+        try:
+            Connection.cursor().execute(insertQuery ,(str(i), Name, surname, username, ))
+            Connection.commit()
+        except Exception as e:
+            print(e)
+
+# Loads pre-made Users
+def LoadingUsers(Connection):
+    file = open("Querys/UserData.json")
+    strings = file.readlines()
+
+    insertCustomerQuery =  """INSERT INTO Shop.Customers (ID, Name, Surname, username) 
+                        VALUES (%s, %s, %s, %s);  """
+    insertUserQuery = """INSERT INTO Shop.User (USERID, ROLE, UserName_Hashed, Password_Hashed, Customers_ID) 
+                    VALUES (%s, %s, %s, %s, %s);  """
+
+    for data in tqdm(strings, desc="Loading Users"):
+        encoded = json.loads(data.encode().decode('utf-8-sig'))
+
+        ID = str(encoded["Customers_ID"])
+        Name = str(encoded["Name"])
+        Surname = str(encoded["Surname"])
+        USERID = str(encoded["USERID"])
+        Role = str(encoded["ROLE"])
+        UserName = str(encoded["UserName"])
+        Password = str(encoded["Password"])
+        Customers_ID = ID
+
+        # UserName and Password need to be hashed!!!
+        hashed_UserName = hashlib.sha3_256(UserName.encode('utf-8')).hexdigest()
+        hashed_Password = hashlib.sha3_256(Password.encode('utf-8')).hexdigest()
+
+        
+
+        # Insert the Users into the Database
+        try:
+            Connection.cursor().execute(insertCustomerQuery, (ID, Name, Surname, UserName, ))
+            Connection.commit()
+            Connection.cursor().execute(insertUserQuery, (USERID, Role, hashed_UserName, hashed_Password, Customers_ID, ))
+            Connection.commit()
+        except Exception as e:
+            print(e)
+
+        
+
 
 # Establishes the Connection to the DB
 def connection():
@@ -50,7 +150,12 @@ def startFile():
             print("Tables Are Created!!!")
             print("------------------------------------------------------")
             print("\n")
-            print("Loading Data")
+            print("Loading Products")
+            LoadingProducts(data)
+            print("Loading Users")
+            LoadingUsers(data)
+            print("Loading Customers")
+            LoadingCustomers(data)
             
     except Exception as e:
         print("------------------------------------------------------")
@@ -64,82 +169,3 @@ def startFile():
 # ------------------------------------------------ #
 
 startFile()
-
-# Loads the Tables
-def LoadingTables(Connection):
-    File = open("./Querys/Table_query.sql")
-    Querys = File.readlines()
-    for action in tqdm(Querys, desc="Loading Tables"):
-        Connection.execute(action)
-
-# Loads the Products
-def LoadingProducts(Connection):
-    File = open ("./Querys/Product_DATA")
-    Data = File.readlines()
-    ID = 1
-
-    insertQuery =  """INSERT INTO `Shop`.`Products` (`ID`, `Name`, `PrdouctNumber`, `Description`, `Calories`, `Protein`, `Fat`, `Sodium`, `Fiber`, `Carbo`, `Sugar`, `Vitamins`) 
-                        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"""
-    for data in tqdm(Data, desc="Loading Products"):
-        decrypted = json.load(data)
-
-        Name = str(decrypted["name"])
-        ProductNumber = ID
-        Description = ""
-        Calories = str(decrypted["calories"])
-        Protein = str(decrypted["protein"])
-        Fat = str(decrypted["fat"])
-        Sodium = str(decrypted["sodium"])
-        Fiber = str(decrypted["fiber"])
-        Carbo = str(decrypted["carbo"])
-        Sugar = str(decrypted["sugars"])
-        Vitamins = str(decrypted["vitamins"])
-
-        FinalQuery = (insertQuery ,(ID, Name, ProductNumber, Description, Calories, Protein, Fat, Sodium, Fiber, Carbo, Sugar, Vitamins))
-        Connection.execute(FinalQuery)
-        Connection.commit()
-
-        ID += 1
-
-# Loads random Customers
-def LoadingCustomers(Connection):
-    insertQuery =  """INSERT INTO `Shop`.`Customers` (`ID`, `Name`, `Surname`) 
-                        VALUES (%s, %s, %s);  """
-    x = range(300)
-    for i in tqdm(x, desc="Generating Users"):
-        Name = names.get_first_name()
-        surname = names.get_last_name()
-
-        FinalQuery = (insertQuery ,(i, Name, surname))
-        Connection.execute(FinalQuery)
-        Connection.commit()
-
-# Loads pre-made Users
-def LoadingUsers(Connection):
-    file = open("Querys/UserData.json")
-    strings = file.readlines()
-
-    insertCustomerQuery =  """INSERT INTO `Shop`.`Customers` (`ID`, `Name`, `Surname`) 
-                        VALUES (%s, %s, %s);  """
-    insertUserQuery = """INSERT INTO `Shop`.`User` (`USERID`, `ROLE`, `UserName_Hashed`, `Password_Hashed`, `Customers_ID`) 
-                    VALUES (%s, %s, %s, %s, %s);  """
-
-    for data in tqdm(strings, desc="Loading Users"):
-        encoded = json.load(data)
-
-        ID = str(encoded["Customers_ID"])
-        Name = str(encoded["Name"])
-        Surname = str(encoded["Surname"])
-        USERID = str(encoded["USERID"])
-        Role = str(encoded["ROLE"])
-        UserName = str(encoded["UserName"])
-        Password = str(encoded["Password"])
-        Customers_ID = ID
-
-        # UserName and Password need to be hashed!!!
-        UserName = hashlib.sha3_256(UserName)
-        Password = hashlib.sha3_256(Password)
-
-        # Insert the Users into the Database
-        Connection.execute(insertCustomerQuery, (ID, Name, Surname))
-        Connection.execute(insertUserQuery, (USERID, Role, UserName, Password, Customers_ID))

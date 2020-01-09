@@ -13,7 +13,7 @@ services:
       MYSQL_ROOT_HOST: '%'
       # MYSQL_ROOT_HOST: 0.0.0.0/255.255.255.248
     volumes:
-      - Final Assignment:/var/lib/mysql
+      - db_data:/var/lib/mysql
     restart: always
     ports:
       - "3308:3306"
@@ -24,29 +24,62 @@ services:
       - "db:database"
     image: tablescreater:0.1
 
+  # -------------------------------------------
   # Start the API
   # TODO: Ports zuweisen
   API:
-    image: API_Service:0.1
-    links: "db:database"
+    image: apiservice:0.1
+    links: 
+      - "db:database"
+      - "SecurityService:Securityapi"
     ports: 
+      - "5000:5000"
+    restart: always
 
   # Start the Authentication Service
   SecurityService:
-    image: Security_Service:0.1
+    image: securityservice:0.1
     restart: always
-  
-  # ---------------------------------------------------------
+    links: 
+      - "db:database"
+
+  # -------------------------------------------
+  # Helper
   # Start the Helpers
+  helpercustomer:
+    image: helpercustomer:0.1
+    links: 
+      - "API:API"
 
-
-
-networks:
-  main:
-    name: Final Assignment
-  Frontend:
-    name: Frontend
+  helperDeliverer:
+    image: helperdeliverer:0.1
+    links: 
+      - "API:API"
   
+
+  helperEmployer:
+    image: helperemployer:0.1
+    links: 
+      - "API:API"
+
+  # -------------------------------------------
+  # Webpage
+  StandartWebpage:
+    image: standartwebpage:0.1
+    links: 
+      - "API:API"
+    ports: 
+      - "8080:8080"
+    command: npm start
+
+  AdminWebpage:
+    image: adminwebpage:0.1
+    links: 
+      - "API:API"
+    ports: 
+      - "8081:8080"
+    command: npm start
+
 
 volumes:
   db_data: {}

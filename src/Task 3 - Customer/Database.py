@@ -3,9 +3,9 @@ import time
 
 # connects to the DB
 class Database:
-    def ConnectToDatabase(self) -> Database:
+    def ConnectToDatabase():
         try:
-            data = Database()
+            data = Database.Database()
             if data.is_connected():
                 print("Connection Established!!!")
                 print("------------------------------------------------------")
@@ -17,11 +17,11 @@ class Database:
             time.sleep(30)
             print("Trying again")
             print("------------------------------------------------------")
-            ConnectToDatabase()
+            Database.ConnectToDatabase()
 
 
     # connects to the Database and return the Connection
-    def Database(self) -> Database:
+    def Database():
         File = open("Setup.config").readlines()
         host = File.pop(0)
         port = File.pop(0)
@@ -43,7 +43,7 @@ class Database:
         return Database
 
     # Gets a Query, sends it to the DB and returns the answer
-    def SendQuery(self, Database, Query) -> answer:
+    def SendQuery( Database, Query):
         pointer = Database.cursor()
 
         pointer.execute(Query)

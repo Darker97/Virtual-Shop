@@ -34,8 +34,6 @@ class ApiLogic:
         # return result
         return answer
 
-        pass
-
 
     # Question with own Script
     def SpecialQuestionToTheServer( SecurityCookie ,Query, Database):

@@ -10,7 +10,6 @@ def setup():
     #BotHelper.ConnectToBot("Hello")
     pass
 
-
 # start
 setup()
 
@@ -20,12 +19,14 @@ setup()
 waitingTime = 60
 Adress = "http://API:5000"
 
-while(True):     
-    # Collect Data
-    Data = DataLoader.CollectData(Adress)
+# --------------------------------------------
 
-    # send Data to API
+while(True):     
+   
     try:
+         # Collect Data
+        Data = DataLoader.CollectData(Adress)
+        # send Data to API
         ApiHelper.Senddata(Adress, Data)
     except Exception as e:
         print(e)

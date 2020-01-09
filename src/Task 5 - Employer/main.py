@@ -22,11 +22,11 @@ Adress = "http://API:5000"
 # --------------------------------------------
 
 while(True):     
-    # Collect Data
-    Data = DataLoader.CollectData(Adress)
-
-    # send Data to API
+   
     try:
+         # Collect Data
+        Data = DataLoader.CollectData(Adress)
+        # send Data to API
         ApiHelper.Senddata(Adress, Data)
     except Exception as e:
         print(e)

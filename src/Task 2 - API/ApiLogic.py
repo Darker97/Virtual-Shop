@@ -34,15 +34,11 @@ class ApiLogic:
         # send query
         temp = int(QuestionID)
         finalQuery = query[temp]
+
         try:
             answer = ApiLogic.sendQuery(finalQuery, Database)
         except Exception as e:
             answer = "SQL ERROR " + str(e)
-
-        try:
-            Database.cursor().fetchall()
-        except Exception as e:
-            answer = str(e)
         
         # return result
         return answer, 200
@@ -118,6 +114,7 @@ class ApiLogic:
         try:
             Database.cursor(buffered=True).execute(Query ,FinalQuery)
             Database.commit()
+            Database.cursor().fetchall()
             Database.cursor().close()
         except Exception as e:
             return(str(e))
@@ -153,6 +150,7 @@ class ApiLogic:
         try:
             Database.cursor(buffered=True).execute(Query ,FinalQuery)
             Database.commit()
+            Database.cursor().fetchall()
             Database.cursor().close()
         except Exception as e:
             return(str(e))
@@ -186,6 +184,7 @@ class ApiLogic:
         try:
             Database.cursor(buffered=True).execute(Query ,FinalQuery)
             Database.commit()
+            Database.cursor().fetchall()
             Database.cursor().close()
         except Exception as e:
             return(str(e))
@@ -199,11 +198,11 @@ class ApiLogic:
         return query
 
     def sendQuery( Query, Database):
-        Cursor = Database.cursor()
+        Cursor = Database.cursor(buffered=True)
         try:
             Cursor.execute(Query)
         except Exception as e:
-            return str(e)
+            return "sendquery" + str(e)
         
         Database.commit()
         Data = Cursor.fetchall()

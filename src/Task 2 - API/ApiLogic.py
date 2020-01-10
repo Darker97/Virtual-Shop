@@ -39,6 +39,11 @@ class ApiLogic:
         except Exception as e:
             answer = "SQL ERROR " + str(e)
 
+        try:
+            Database.cursor().fetchall()
+        except Exception as e:
+            answer = str(e)
+        
         # return result
         return answer, 200
 
@@ -72,6 +77,10 @@ class ApiLogic:
 
         # send query
         answer = ApiLogic.sendQuery(Query)
+        try:
+            Database.cursor().fetchall()
+        except Exception as e:
+            answer = str(e)
 
         # return result
         return answer, 200
@@ -103,14 +112,16 @@ class ApiLogic:
         ID = 0
 
         # send query        
-        Query = """INSERT INTO Shop.Transactions (Products_ID, Type, ID) VALUES (%s, %s, %s); """
-        FinalQuery = Product, "bought", ID
+        Query = """INSERT INTO `Shop`.`Transactions` (`Type`, `Products_Name`) VALUES (%s, %s);"""
+        FinalQuery =  "bought", Product
 
         try:
-            Database.cursor().execute(Query ,FinalQuery)
+            Database.cursor(buffered=True).execute(Query ,FinalQuery)
             Database.commit()
+            Database.cursor().close()
         except Exception as e:
             return(str(e))
+        
 
         return "Success"
 
@@ -135,13 +146,14 @@ class ApiLogic:
         ID = 0
 
         # send query
-        Query = "INSERT INTO Shop.Transactions (Products_ID, Type, ID) VALUES (%s, %s, %s);"
+        Query = """INSERT INTO `Shop`.`Transactions` (`Type`, `Products_Name`) VALUES (%s, %s);"""
 
-        FinalQuery = Product, "delivered", ID
+        FinalQuery = "delivered", Product
 
         try:
-            Database.cursor().execute(Query ,FinalQuery)
+            Database.cursor(buffered=True).execute(Query ,FinalQuery)
             Database.commit()
+            Database.cursor().close()
         except Exception as e:
             return(str(e))
 
@@ -166,13 +178,19 @@ class ApiLogic:
 
         rating = random.randint(0,5)
         body = Review
-        Customers_ID = "3"
-        Products_ID = ApiLogic.sendQuery((Products_ID_Query,(Product)), Database)
+        Customers_ID = random.randint(0,200)
 
         # send query
-        Query = """ INSERT INTO Shop.Comments (Body, Rating, Customers_ID, Products_ID) VALUES (%s, %s, %s, %s); """, (body, rating, Customers_ID, Products_ID)
-        FinalQuery = (Query, (body, rating, Customers_ID, Products_ID))
-        return ApiLogic.sendQuery(Query, Database)
+        Query = """ INSERT INTO Shop.Comments (Body, Rating, Customers_ID, Products_Name) VALUES (%s, %s, %s, %s); """
+        FinalQuery = body, rating, Customers_ID, Product
+        try:
+            Database.cursor(buffered=True).execute(Query ,FinalQuery)
+            Database.commit()
+            Database.cursor().close()
+        except Exception as e:
+            return(str(e))
+
+        return "Success"
 
 
     def queryloader():
@@ -188,8 +206,9 @@ class ApiLogic:
             return str(e)
         
         Database.commit()
-        Cursor = Cursor.fetchall()
+        Data = Cursor.fetchall()
         array = []
-        for each in Cursor:
+        for each in Data:
             array.append(str(each))
+        Cursor.close()
         return str(array)

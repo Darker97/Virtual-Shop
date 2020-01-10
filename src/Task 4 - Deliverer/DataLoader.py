@@ -1,29 +1,29 @@
-import ApiHelper
+from ApiHelper import ApiHelper
 import random
 import json
-
+ 
 # Collects the Data the Helper needs
 class DataLoader:
-    def CollectData(self):
+    def CollectData(Adress):
         # Product Suchen
 
         # return Data
         # Data must contain
-        # SecurityCookie, DATA
+        # SecurityCookie, Product
 
-        SecurityCookie = ApiHelper.login()
-        Product = getProduct()
+        SecurityCookie = ApiHelper.login(Adress)
+        Product = DataLoader.getProduct()
 
-        Body = """{"SecurityCookie" = %s, "Product" = %s}  """
+        Body = {"SecurityCookie": SecurityCookie, "Product": Product}  
 
-        return (Body, (SecurityCookie, Product))
+        return Body
 
-    def getProduct(self) -> String:
-        productsSheet = open("Product_DATA")
+    def getProduct():
+        productsSheet = open("Product_Data")
         allJsons = productsSheet.readlines()
 
-        selectedProduct = allJsons[random.randint(0, allJsons.count()-1)]
+        selectedProduct = allJsons[random.randint(0, len(allJsons)-1)]
 
-        Json = json.load(selectedProduct)
+        Json = json.loads(selectedProduct)
         return Json['name']
         

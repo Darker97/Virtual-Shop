@@ -2,12 +2,12 @@ import atexit
 import time
 import mysql.connector as mysql
 
-import flask as Flask
+from flask import Flask
 from flask import request
 
-import ApiLogic
-import BotLogic
-import Database_Functions
+from ApiLogic import ApiLogic
+from BotLogic import BotLogic
+from Database_Functions import Database_Functions
 
 # ------------------------------------------
 
@@ -23,7 +23,7 @@ def exit():
 # ------------------------------------------
 # API - The Paths of the API
 def startAPI(Database):
-    app = Flask("API")
+    app = Flask("Api")
 
     query = ApiLogic.queryloader()
 
@@ -34,42 +34,50 @@ def startAPI(Database):
     # Question with QuestionID
     @app.route('/Data', methods=['GET'])
     def QuestionWithID():
-        print("GET DATA Request")
-        return ApiLogic.QuestionToTheServer(request.form['SecurityCookie'], request.form['QuestionID'], Database, query)
+        answer = ApiLogic.QuestionToTheServer(request.form['SecurityCookie'], request.form['QuestionID'], Database, query)
+        return answer
 
     # Question with own Script
-    @app.route('/Data/Special', mehods=['GET'])
+    @app.route('/Data/Special', methods=['GET'])
     def QuestionWithoutID():
-        return ApiLogic.SpecialQuestionToTheServer(request.form['SecurityCookie'], request.form['Data'], request.form['QuestionID'], Database, query)
+        answer = ApiLogic.SpecialQuestionToTheServer(request.form['SecurityCookie'], request.form['Data'], Database, query)
+        return answer
 
     # Login
     @app.route('/User', methods=['GET'])
     def Login():
-        print("GET USER Request")
-        return ApiLogic.Login(request.form['Password'], request.form['UserName'], Database, query)
+        # answer = ApiLogic.Login(request.form['Password'], request.form['UserName'])
+        return "yo"
 
     # Bought
     @app.route('/Product', methods=['GET'])
     def ProductBought():
-        return ApiLogic.ProductBought(request.form['SecurityCookie'], request.form['DATA'], Database)
+        answer = ApiLogic.ProductBought(request.form['SecurityCookie'], request.form['Product'], Database)
+        return answer
 
     # Delivered
     @app.route('/Product', methods=['POST'])
     def ProductDelivered():
-        return ApiLogic.Productdeliverd(request.form['SecurityCookie'], request.form['Data'], Database)
+        answer = ApiLogic.Productdeliverd(request.form['SecurityCookie'], request.form['Product'], Database)
+        return answer
 
+    #review
+    @app.route('/review', methods=['GET'])
+    def ReviewMade():
+        answer = ApiLogic.Review(request.form['SecurityCookie'], request.form['Product'], request.form['Review'], Database)
+        return answer
 
     @app.errorhandler(404)
     def not_found(error):
         return "Error 404 - I'm a Teapot"
 
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0')
 
 
 # ------------------------------------------
 
 print("""
-            _____ _                    ___  ______ _____ 
+         _____ _                    ___  ______ _____ 
         /  ___| |                  / _ \ | ___ \_   _|
         \ `--.| |__   ___  _ __   / /_\ \| |_/ / | |  
             `--. \ '_ \ / _ \| '_ \  |  _  ||  __/  | |  

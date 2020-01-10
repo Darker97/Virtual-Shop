@@ -3,28 +3,29 @@ import json
 
 # Sends the given Data to the API
 class ApiHelper:
-    def Senddata(self, Adress, body):
+    def Senddata( Adress, body):
         # SecurityCookie, Product, Review
 
-        Adress += "/review"
+        Adress += "/Product"
 
         # put request
-        sended = requests.put(Adress, params=body)
+        sended = requests.post(Adress, data=body)
         return sended.json()
 
-    def login(self):
+    def login(Adress):
         # load credentials
         file = open("credential.key")
-        Data = json.load(file.readline())
+        line = file.readline()
+        Data = json.loads(line)
         
         #UserName Password
         password = Data['Password']
         Username = Data['UserName']
 
         # sends login to API
-        Adress = "/User"
+        Adress += "/User"
 
         #UserName, Password
-        body = """{ "UserName" = %s, "Password" = %s }"""
+        params = {"Password": password, "UserName": Username}
 
-        return requests.put(Adress, params=(body,(Username, password)))
+        return requests.get(Adress, data= params)

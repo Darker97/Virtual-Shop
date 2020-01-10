@@ -3,9 +3,9 @@ import time
 
 class Database_Functions:
 
-    def ConnectToDatabase(self):
+    def ConnectToDatabase():
         try:
-            data = Database()
+            data = Database_Functions.Database()
             if data.is_connected():
                 print("Connection Established!!!")
                 print("------------------------------------------------------")
@@ -17,12 +17,12 @@ class Database_Functions:
             time.sleep(30)
             print("Trying again")
             print("------------------------------------------------------")
-            ConnectToDatabase()
+            Database_Functions.ConnectToDatabase()
 
 
     # connects to the Database
-    def Database(self):
-        File = open("Setup.config").readlines()
+    def Database():
+        File = open("./src/Setup.config").readlines()
         host = File.pop(0)
         port = File.pop(0)
         user = File.pop(0)

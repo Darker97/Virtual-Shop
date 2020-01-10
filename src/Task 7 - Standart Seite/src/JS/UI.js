@@ -2,9 +2,9 @@
  * returns a view of type artikel
  */
 export function view () {
-    const temp = document.createElement('artikel')
-    return temp
-  }
+  const temp = document.createElement('artikel')
+  return temp
+}
   
   /**
    * returns button with a name
@@ -44,6 +44,16 @@ export function view () {
     return temp
   }
   
+  /**
+   * returns a headline3 with the text
+   * @param {String} text
+   */
+  export function content (text) {
+    const temp = document.createElement('p')
+    temp.innerText = text
+    return temp
+  }
+
   /**
    * builds an Input
    * @param {String} name

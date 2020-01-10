@@ -1,68 +1,63 @@
-body{
+body {
     padding-top: 2%;
     padding-left: 2%;
     padding-right: 2%;
     padding-bottom: 2%;
 }
-main{
+
+main {
     background-color: gray;
     padding-left: 2%;
     padding-right: 2%;
     border-radius: 20px;
     padding-top: 1%;
     padding-bottom: 1%;
-}
-
-main div{
-    background-color: rgb(194, 189, 189);
-    border-radius: 10px;
-    padding-left: 1%;
-    padding-right:1%;
-    padding-top: 0.01%;
-    padding-bottom: 0.01%;
-    width: 350px;
-}
-
-header img{
-    padding-left: 75%;
-    width: 200px;
-    margin-top: -10%;
+    scroll-margin-bottom: 100px;
     
 }
 
-header div{
-    padding-bottom: 2%;
-    padding-top: 2%;
-    width: 1000px;
-    margin-top: -5%;
+main div {
+    
+    padding-left: 1%;
+    padding-right: 1%;
+    padding-top: 0.01%;
+    padding-bottom: 0.01%;
+    display:grid;
+    grid-template-rows: 200px 1fr 100px; 
+    grid-template-columns: 25% 25% 25% 25%;
 }
 
-header h1{
-    margin:0; 
-    width: 1000px;
-    font-size: 44px;
-}
-header h2{
-    width: 1000px;
-}
-main h2{
-    font-size: 21px;
+header img {
+    padding-left: 84%;
+    width: 200px;
+    margin-top: -10%;
+
 }
 
-.card {
+header div {
+    margin-bottom: 2%;
+}
+
+
+
+main artikel {
+    background-color: rgb(194, 189, 189);
+    border-radius: 10px;
+    padding-left: 1%;
+    padding-right: 1%;
+    padding-top: 0.01%;
+    padding-bottom: 1%;
+    width: 350px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     max-width: 300px;
-    margin: auto;
     text-align: center;
     font-family: arial;
-  }
-  
-  .price {
-    color: grey;
-    font-size: 22px;
-  }
-  
-  .card button {
+    margin-top: 2%;
+    margin-bottom: 2%;
+    margin-left: auto; 
+    margin-right: auto; 
+}
+artikel button {
     border: none;
     outline: 0;
     padding: 12px;
@@ -72,8 +67,39 @@ main h2{
     cursor: pointer;
     width: 100%;
     font-size: 18px;
-  }
-  
-  .card button:hover {
+    border-radius: 10px;
+}
+
+artikel button:hover {
     opacity: 0.7;
-  }
+}
+
+main h3 {
+    color: grey;
+    font-size: 22px;
+}
+
+/*
+header div {
+    padding-bottom: 2%;
+    padding-top: 2%;
+    width: 1000px;
+    margin-top: -5%;
+}*/
+
+header h1 {
+    margin: 0;
+    width: 1000px;
+    font-size: 44px;
+}
+
+header h2 {
+    width: 1000px;
+}
+
+main h2 {
+    font-size: 21px;
+}
+
+
+

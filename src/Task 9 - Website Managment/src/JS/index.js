@@ -1,217 +1,79 @@
-import * as CanvasJS from CanvasJS;
-import load from Data;
+import * as UI from 'UI.js'
+import { Get } from './request'
 
 /**
  * Does Everything that controlls the Website
  */
 
-function loadCharts(params) {
+var Adress = 'localhost:5000/Data'
 
-    // MostBrougth
+function loadCharts (params) {
+  // Load the UI For the specific Parts of the Page
+  var Work = document.getElementById('One')
+  One(Work)
 
-    var Data = LoadMostBrougth()
+  Work = document.getElementById('Two')
+  Two(Work)
 
-    var chart = new CanvasJS.Chart("MostBrougth", {
-        animationEnabled: true,
-        axisX:{
-            interval: 1
-        },
-        axisY2:{
-            interlacedColor: "rgba(1,77,101,.2)",
-            gridColor: "rgba(1,77,101,.1)",
-            title: "Number of Companies"
-        },
-        data: [{
-            type: "bar",
-            name: "companies",
-            axisYType: "secondary",
-            color: "#014D65",
-            dataPoints: Data
-        }]
-    });
-    chart.render();
+  Work = document.getElementById('Three')
+  Three(Work)
 
-    // Rating
+  Work = document.getElementById('Four')
+  Four(Work)
 
-    var Data = LoadsRating()
-
-    var chart = new CanvasJS.Chart("Rating", {
-        animationEnabled: true,
-        axisX:{
-            interval: 1
-        },
-        axisY2:{
-            interlacedColor: "rgba(1,77,101,.2)",
-            gridColor: "rgba(1,77,101,.1)",
-            title: "Number of Companies"
-        },
-        data: [{
-            type: "bar",
-            name: "companies",
-            axisYType: "secondary",
-            color: "#014D65",
-            dataPoints: Data
-        }]
-    });
-    chart.render();
-
-    // WhatInStock
-    var Data = loadsWhatInStock()
-
-    var chart = new CanvasJS.Chart("WhatInStock", {
-        animationEnabled: true,
-        axisX:{
-            interval: 1
-        },
-        axisY2:{
-            interlacedColor: "rgba(1,77,101,.2)",
-            gridColor: "rgba(1,77,101,.1)",
-            title: "Number of Companies"
-        },
-        data: [{
-            type: "bar",
-            name: "companies",
-            axisYType: "secondary",
-            color: "#014D65",
-            dataPoints: Data
-        }]
-    });
-    chart.render();
-
-    // MostCommentsProduct
-    var Data = LoadsMostCommentsProduct()
-
-    var chart = new CanvasJS.Chart("MostCommentsProduct", {
-        animationEnabled: true,
-        axisX:{
-            interval: 1
-        },
-        axisY2:{
-            interlacedColor: "rgba(1,77,101,.2)",
-            gridColor: "rgba(1,77,101,.1)",
-            title: "Number of Companies"
-        },
-        data: [{
-            type: "bar",
-            name: "companies",
-            axisYType: "secondary",
-            color: "#014D65",
-            dataPoints: Data
-        }]
-    });
-    chart.render();
-
-    // MostCommenstUser
-    var Data = LoadsMostCommenstUser()
-
-    var chart = new CanvasJS.Chart("MostCommenstUser", {
-        animationEnabled: true,
-        axisX:{
-            interval: 1
-        },
-        axisY2:{
-            interlacedColor: "rgba(1,77,101,.2)",
-            gridColor: "rgba(1,77,101,.1)",
-            title: "Number of Companies"
-        },
-        data: [{
-            type: "bar",
-            name: "companies",
-            axisYType: "secondary",
-            color: "#014D65",
-            dataPoints: Data
-        }]
-    });
-    chart.render();
-    
+  Work = document.getElementById('Five')
+  Five(Work)
 }
 
-function LoadMostBrougth(params) {
-    var Link = ""
-    // y, label
-    var Data = []
-    var cookie = load("Cookie")
+/**
+ * What is bought the Most?
+ * @param {} WorkingObject 
+ */
+function One (WorkingObject) {
+  var QuestionId = 6
+  var body = { SecurityCookie: 'hdash', QuestionID: QuestionId }
+  var Data = Get(Adress, body)
 
-    // SecurityCookie, QuestionID
-    Message = {
-        "SecurityCookie": cookie,
-        "QuestionID": "1"
-            }
-    var rohData = Get(Link, Message)
+  // Returns: Name, Price, charge
 
-    // remake rohData
-
-    return Data
+  // TODO: USE THAT
+  console.log(Data)
+  return ''
 }
 
-function LoadsRating(params) {
-    var Link = ""
-    // y, label
-    var Data = []
-    var cookie = load("Cookie")
-
-    // SecurityCookie, QuestionID
-    Message = {
-        "SecurityCookie": cookie,
-        "QuestionID": "2"
-            }
-    var rohData = Get(Link, Message)
-
-    // remake rohData
-
-    return Data
+function Two (WorkingObject) {
+  var QuestionId = 7
+  var body = { SecurityCookie: 'hdash', QuestionID: QuestionId }
+  var Data = Get(Adress, body)
 }
 
-function loadsWhatInStock(params) {
-    var Link = ""
-    // y, label
-    var Data = []
-    var cookie = load("Cookie")
+function Three (WorkingObject) {
+  var QuestionId = 8
+  var body = { SecurityCookie: 'hdash', QuestionID: QuestionId }
+  var Data = Get(Adress, body)
 
-    // SecurityCookie, QuestionID
-    Message = {
-        "SecurityCookie": cookie,
-        "QuestionID": "3"
-            }
-    var rohData = Get(Link, Message)
 
-    // remake rohData
-
-    return Data
+  // TODO: USE THAT
+  console.log(Data)
+  return ''
 }
 
-function LoadsMostCommentsProduct(params) {
-    var Link = ""
-    // y, label
-    var Data = []
-    var cookie = load("Cookie")
+function Four (WorkingObject) {
+  var QuestionId = 9
+  var body = { SecurityCookie: 'hdash', QuestionID: QuestionId }
+  var Data = Get(Adress, body)
 
-    // SecurityCookie, QuestionID
-    Message = {
-        "SecurityCookie": cookie,
-        "QuestionID": "4"
-            }
-    var rohData = Get(Link, Message)
-
-    // remake rohData
-
-    return Data
+  // TODO: USE THAT
+  console.log(Data)
+  return ''
 }
 
-function LoadsMostCommenstUser(params) {
-    var Link = ""
-    // y, label
-    var Data = []
-    var cookie = load("Cookie")
+function Five (WorkingObject) {
+  var QuestionId = 10
+  var body = { SecurityCookie: 'hdash', QuestionID: QuestionId }
+  var Data = Get(Adress, body)
 
-    // SecurityCookie, QuestionID
-    Message = {
-        "SecurityCookie": cookie,
-        "QuestionID": "5"
-            }
-    var rohData = Get(Link, Message)
-
-    // remake rohData
-
-    return Data
+  // TODO: USE THAT
+  console.log(Data)
+  return ''
 }

@@ -45,6 +45,13 @@ function Two (WorkingObject) {
   var QuestionId = 7
   var body = { SecurityCookie: 'hdash', QuestionID: QuestionId }
   var Data = Get(Adress, body)
+
+  // Returns: Name, Score
+
+
+  // TODO: USE THAT
+  console.log(Data)
+  return ''
 }
 
 function Three (WorkingObject) {

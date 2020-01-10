@@ -58,7 +58,7 @@ function loadData(params) {
     // Load Data
     // test
     let i = 0
-    while(i !== 16) {
+    while(i !== 5) {
         let view = ui.view()
         let name = ui.headline('name')
         let price =ui.headline3('price')

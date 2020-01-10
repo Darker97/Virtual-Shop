@@ -16,7 +16,7 @@ setup()
 # --------------------------------------------    
 # The Time the Bot waits until next action 
 
-waitingTime = 30
+waitingTime = 15
 Adress = "http://API:5000"
 
 # --------------------------------------------

@@ -58,7 +58,7 @@ function Three (WorkingObject) {
   var QuestionId = 8
   var body = { SecurityCookie: 'hdash', QuestionID: QuestionId }
   var Data = Get(Adress, body)
-
+    // returns Name and charge
 
   // TODO: USE THAT
   console.log(Data)
@@ -69,6 +69,8 @@ function Four (WorkingObject) {
   var QuestionId = 9
   var body = { SecurityCookie: 'hdash', QuestionID: QuestionId }
   var Data = Get(Adress, body)
+
+  // Returns Name and Charge
 
   // TODO: USE THAT
   console.log(Data)

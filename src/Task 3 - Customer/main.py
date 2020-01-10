@@ -16,21 +16,25 @@ setup()
 # --------------------------------------------    
 # The Time the Bot waits until next action 
 
-waitingTime = 60
+waitingTime = 30
 Adress = "http://API:5000"
 
 # --------------------------------------------
 
 while(True):     
-   
+    Data = ""
     try:
          # Collect Data
         Data = DataLoader.CollectData(Adress)
-        # send Data to API
-        ApiHelper.Senddata(Adress, Data)
     except Exception as e:
         print(e)
     
+    # send Data to API
+    try:
+        # send Data to API
+        ApiHelper.Senddata(Adress, Data)
+    except Exception as identifier:
+        pass
 
     # wait & repeat
     time.sleep(waitingTime)

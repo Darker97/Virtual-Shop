@@ -45,9 +45,9 @@ class Database:
     # Gets a Query, sends it to the DB and returns the answer
     def SendQuery( Database, Query):
         pointer = Database.cursor()
-
         pointer.execute(Query)
+        Database.commit()
 
         answer = pointer.fetchall()
 
-        return answer
+        return str(answer)

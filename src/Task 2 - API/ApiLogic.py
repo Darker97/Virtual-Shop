@@ -1,5 +1,5 @@
 from Database_Functions import Database_Functions
-import Authentication_Service
+from Authentication_Service import Authentication_service
 import mysql.connector as mysql
 import random
 
@@ -10,13 +10,14 @@ class ApiLogic:
     # Question with QuestionID
     def QuestionToTheServer( SecurityCookie, QuestionID, Database, query):
         
-        body = """ { "Token" = %s } """
+        # body = """ { "Token" = %s } """
 
-        finalbody = (body (SecurityCookie))
+        # finalbody = (body (SecurityCookie))
 
 
         # Role Of The User
-        role = Authentication_Service.sendMessage(adress, finalbody)
+        # role = Authentication_Service.sendMessage(adress, finalbody)
+        role = "Test"
 
         if role == "False":
             return "Error - User not allowed"
@@ -28,25 +29,37 @@ class ApiLogic:
         if (role == "customer") and (QuestionID >= 5):
             return "Error - Not allowed"
 
+
+        answer = ""
         # send query
-        answer = sendQuery(query[QuestionID])
+        temp = int(QuestionID)
+        finalQuery = query[temp]
+        try:
+            answer = ApiLogic.sendQuery(finalQuery, Database)
+        except Exception as e:
+            answer = "SQL ERROR " + str(e)
 
+        try:
+            Database.cursor().fetchall()
+        except Exception as e:
+            answer = str(e)
+        
         # return result
-        return answer
-
-        pass
+        return answer, 200
 
 
     # Question with own Script
     def SpecialQuestionToTheServer( SecurityCookie ,Query, Database):
         # Role of The User
-        body = """ { "Token" = %s } """
+        # body = """ { "Token" = %s } """
 
-        finalbody = (body (SecurityCookie))
+        # finalbody = (body (SecurityCookie))
 
 
         # Role Of The User
-        role = Authentication_Service.sendMessage(adress, finalbody)
+        # role = Authentication_Service.sendMessage(adress, finalbody)
+
+        role = "admin"
 
         if role == "False":
             return "Error - User not allowed"
@@ -63,69 +76,99 @@ class ApiLogic:
             return "ERROR - Injection!"
 
         # send query
-        answer = sendQuery(Query)
+        answer = ApiLogic.sendQuery(Query)
+        try:
+            Database.cursor().fetchall()
+        except Exception as e:
+            answer = str(e)
 
         # return result
-        return answer
+        return answer, 200
 
 
     # Login
     def Login( Password, UserName):
-        body = """{"User" = %s,
-            "Password" = %s}"""
-
-        finalbody = (body, (UserName, Password))
-
-        return Authentication_Service.sendMessage(adress, finalbody)
+        adress = "/security/login"
+        body = {"User": UserName, "Password": Password}
+        return Authentication_Service.sendMessage(adress, body)
         
 
     # Bought
     def ProductBought( SecurityCookie, Data, Database):
         # check Role
-        body = """ { "Token" = %s } """
+        # body = """ { "Token" = %s } """
 
-        finalbody = (body (SecurityCookie))
+        # finalbody = (body (SecurityCookie))
 
 
         # Role Of The User
-        role = Authentication_Service.sendMessage(adress, finalbody)
-
+        # role = Authentication_Service.sendMessage(adress, finalbody)
+        role = "helper"
+        
         if role != "helper":
             return "Error - User not allowed"
 
+        Product = Data
+        ID = 0
 
         # send query        
-        Query = """INSERT INTO `Shop`.`Transactions` (`Products_ID`, `Type`, `ID`) VALUES (%s, %s, %s); """
-        FinalQuery = (Query, (Data['Products_ID'], "bought",Data['ID']))
-        sendQuery(FinalQuery, Database)
+        Query = """INSERT INTO `Shop`.`Transactions` (`Type`, `Products_Name`) VALUES (%s, %s);"""
+        FinalQuery =  "bought", Product
+
+        try:
+            Database.cursor(buffered=True).execute(Query ,FinalQuery)
+            Database.commit()
+            Database.cursor().close()
+        except Exception as e:
+            return(str(e))
+        
+
+        return "Success"
+
 
     # Delivered
-    def ProductDelivered( SecurityCookie, Data, Database):
+    def Productdeliverd( SecurityCookie, Data, Database):
         # Role of The User
-        body = """ { "Token" = %s } """
+        # body = """ { "Token" = %s } """
 
-        finalbody = (body (SecurityCookie))
+        # finalbody = (body (SecurityCookie))
 
 
         # Role Of The User
-        role = Authentication_Service.sendMessage(adress, finalbody)
+        # role = Authentication_Service.sendMessage(adress, finalbody)
+
+        role = "helper"
 
         if role != "helper":
             return "Error - User not allowed"
         
+        Product = Data
+        ID = 0
+
         # send query
-        Query = """INSERT INTO `Shop`.`Transactions` (`Products_ID`, `Type`, `ID`) VALUES (%s, %s, %s); """
-        FinalQuery = (Query, (Data['Products_ID'], "delivered",Data['ID']))
-        sendQuery(FinalQuery, Database)
+        Query = """INSERT INTO `Shop`.`Transactions` (`Type`, `Products_Name`) VALUES (%s, %s);"""
+
+        FinalQuery = "delivered", Product
+
+        try:
+            Database.cursor(buffered=True).execute(Query ,FinalQuery)
+            Database.commit()
+            Database.cursor().close()
+        except Exception as e:
+            return(str(e))
+
+        return "Success"
 
     # Review made
     def Review( SecurityCookie, Product, Review, Database):
-        body = """ { "Token" = %s } """
+        # body = """ { "Token" = %s } """
 
-        finalbody = (body (SecurityCookie))
+        # finalbody = (body (SecurityCookie))
 
         # Role Of The User
-        role = Authentication_Service.sendMessage(adress, finalbody)
+        # role = Authentication_Service.sendMessage(adress, finalbody)
+
+        role = "helper"
 
         if role != "helper":
             return "Error - User not allowed"
@@ -135,13 +178,19 @@ class ApiLogic:
 
         rating = random.randint(0,5)
         body = Review
-        Customers_ID = "3"
-        Products_ID = sendQuery((Products_ID_Query,(Product)), Database)
+        Customers_ID = random.randint(0,200)
 
         # send query
-        Query = """ INSERT INTO `Shop`.`Comments` (`Body`, `Rating`, `Customers_ID`, `Products_ID`) VALUES (%s, %s, %s, %s); """
-        FinalQuery = (Query, (body, rating, Customers_ID, Products_ID))
-        sendQuery(FinalQuery, Database)
+        Query = """ INSERT INTO Shop.Comments (Body, Rating, Customers_ID, Products_Name) VALUES (%s, %s, %s, %s); """
+        FinalQuery = body, rating, Customers_ID, Product
+        try:
+            Database.cursor(buffered=True).execute(Query ,FinalQuery)
+            Database.commit()
+            Database.cursor().close()
+        except Exception as e:
+            return(str(e))
+
+        return "Success"
 
 
     def queryloader():
@@ -151,5 +200,15 @@ class ApiLogic:
 
     def sendQuery( Query, Database):
         Cursor = Database.cursor()
-        Cursor.execute(Query)
-        return Cursor.fetchall()
+        try:
+            Cursor.execute(Query)
+        except Exception as e:
+            return str(e)
+        
+        Database.commit()
+        Data = Cursor.fetchall()
+        array = []
+        for each in Data:
+            array.append(str(each))
+        Cursor.close()
+        return str(array)

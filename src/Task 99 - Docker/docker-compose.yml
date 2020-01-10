@@ -50,17 +50,20 @@ services:
     image: helpercustomer:0.1
     links: 
       - "API:API"
+    restart: always
 
   helperDeliverer:
     image: helperdeliverer:0.1
     links: 
       - "API:API"
+    restart: always
   
 
   helperEmployer:
     image: helperemployer:0.1
     links: 
       - "API:API"
+    restart: always
 
   # -------------------------------------------
   # Webpage
@@ -71,6 +74,7 @@ services:
     ports: 
       - "8080:8080"
     command: npm start
+    restart: always
 
   AdminWebpage:
     image: adminwebpage:0.1
@@ -79,6 +83,7 @@ services:
     ports: 
       - "8081:8080"
     command: npm start
+    restart: always
 
 
 volumes:

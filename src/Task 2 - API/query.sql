@@ -1,4 +1,4 @@
-Query1
+SELECT * FROM Shop.Products;
 Query2
 Query3
 Query4

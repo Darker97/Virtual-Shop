@@ -27,7 +27,7 @@ function loadCharts (params) {
 
 /**
  * What is bought the Most?
- * @param {} WorkingObject 
+ * @param {} WorkingObject
  */
 function One (WorkingObject) {
   var QuestionId = 6
@@ -48,7 +48,6 @@ function Two (WorkingObject) {
 
   // Returns: Name, Score
 
-
   // TODO: USE THAT
   console.log(Data)
   return ''
@@ -58,7 +57,7 @@ function Three (WorkingObject) {
   var QuestionId = 8
   var body = { SecurityCookie: 'hdash', QuestionID: QuestionId }
   var Data = Get(Adress, body)
-    // returns Name and charge
+  // returns Name and charge
 
   // TODO: USE THAT
   console.log(Data)
@@ -77,7 +76,30 @@ function Four (WorkingObject) {
   return ''
 }
 
+// User with the most Comments
 function Five (WorkingObject) {
+  var QuestionId = 10
+  var body = { SecurityCookie: 'hdash', QuestionID: QuestionId }
+  var Data = Get(Adress, body)
+
+  // TODO: USE THAT
+  console.log(Data)
+  return ''
+}
+
+// Umsatz pro Produkt
+function Six (WorkingObject) {
+  var QuestionId = 10
+  var body = { SecurityCookie: 'hdash', QuestionID: QuestionId }
+  var Data = Get(Adress, body)
+
+  // TODO: USE THAT
+  console.log(Data)
+  return ''
+}
+
+// GesamtUmsatz
+function Seven (WorkingObject) {
   var QuestionId = 10
   var body = { SecurityCookie: 'hdash', QuestionID: QuestionId }
   var Data = Get(Adress, body)

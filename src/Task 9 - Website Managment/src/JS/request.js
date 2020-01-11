@@ -7,7 +7,7 @@ export function Post (Link, Message) {
   fetch(Link, {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
-    Form: Message
+    form: Message
   })
     .then(response => {
       console.log(response)
@@ -26,8 +26,7 @@ export function Post (Link, Message) {
 export function Get (Link, Message) {
   fetch(Link, {
     method: 'PUT',
-    headers: { 'content-type': 'application/json' },
-    Form: Message
+    body: Message
   })
     .then(response => {
       console.log(response)

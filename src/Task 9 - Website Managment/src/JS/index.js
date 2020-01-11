@@ -39,8 +39,10 @@ function loadCharts (params) {
  */
 function One (WorkingObject) {
   var QuestionId = 6
-  var body = { SecurityCookie: 'hdash', QuestionID: QuestionId }
-  var Data = Get(Adress, body)
+  var form = new FormData()
+  form.append('SecurityCookie', 'dasd')
+  form.append('QuestionID', QuestionId)
+  var Data = Get(Adress, form)
 
   // Returns: Name, Price, charge
 
@@ -52,8 +54,10 @@ function One (WorkingObject) {
 // what is rated highest
 function Two (WorkingObject) {
   var QuestionId = 7
-  var body = { SecurityCookie: 'hdash', QuestionID: QuestionId }
-  var Data = Get(Adress, body)
+  var form = new FormData()
+  form.append('SecurityCookie', 'dasd')
+  form.append('QuestionID', QuestionId)
+  var Data = Get(Adress, form)
 
   // Returns: Name, Score
 
@@ -65,8 +69,10 @@ function Two (WorkingObject) {
 // What do we have in stock
 function Three (WorkingObject) {
   var QuestionId = 8
-  var body = { SecurityCookie: 'hdash', QuestionID: QuestionId }
-  var Data = Get(Adress, body)
+  var form = new FormData()
+  form.append('SecurityCookie', 'dasd')
+  form.append('QuestionID', QuestionId)
+  var Data = Get(Adress, form)
   // returns Name and charge
 
   // TODO: USE THAT
@@ -77,8 +83,10 @@ function Three (WorkingObject) {
 // Product with the most comments
 function Four (WorkingObject) {
   var QuestionId = 9
-  var body = { SecurityCookie: 'hdash', QuestionID: QuestionId }
-  var Data = Get(Adress, body)
+  var form = new FormData()
+  form.append('SecurityCookie', 'dasd')
+  form.append('QuestionID', QuestionId)
+  var Data = Get(Adress, form)
 
   // Returns Name and Charge
 
@@ -90,8 +98,10 @@ function Four (WorkingObject) {
 // User who made the most Comments
 function Five (WorkingObject) {
   var QuestionId = 10
-  var body = { SecurityCookie: 'hdash', QuestionID: QuestionId }
-  var Data = Get(Adress, body)
+  var form = new FormData()
+  form.append('SecurityCookie', 'dasd')
+  form.append('QuestionID', QuestionId)
+  var Data = Get(Adress, form)
 
   // TODO: USE THAT
   console.log(Data)
@@ -101,8 +111,10 @@ function Five (WorkingObject) {
 // Umsatz pro Produkt
 function Six (WorkingObject) {
   var QuestionId = 10
-  var body = { SecurityCookie: 'hdash', QuestionID: QuestionId }
-  var Data = Get(Adress, body)
+  var form = new FormData()
+  form.append('SecurityCookie', 'dasd')
+  form.append('QuestionID', QuestionId)
+  var Data = Get(Adress, form)
 
   // TODO: USE THAT
   console.log(Data)
@@ -112,8 +124,11 @@ function Six (WorkingObject) {
 // GesamtUmsatz
 function Seven (WorkingObject) {
   var QuestionId = 10
-  var body = { SecurityCookie: 'hdash', QuestionID: QuestionId }
-  var Data = Get(Adress, body)
+  
+  var form = new FormData()
+  form.append('SecurityCookie', 'dasd')
+  form.append('QuestionID', QuestionId)
+  var Data = Get(Adress, form)
 
   // TODO: USE THAT
   console.log(Data)

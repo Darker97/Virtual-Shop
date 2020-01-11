@@ -4,6 +4,7 @@ import mysql.connector as mysql
 
 from flask import Flask
 from flask import request
+from flask_cors import CORS, cross_origin
 
 from ApiLogic import ApiLogic
 from BotLogic import BotLogic
@@ -32,7 +33,7 @@ def startAPI(Database):
         return """ The Most efficient way to Optimize an SQL Query is to eliminate it.  """
 
     # Question with QuestionID
-    @app.route('/Data', methods=['GET'])
+    @app.route('/Data', methods=['PUT'])
     def QuestionWithID():
         answer = ApiLogic.QuestionToTheServer(request.form['SecurityCookie'], request.form['QuestionID'], Database, query)
         return answer

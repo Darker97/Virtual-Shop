@@ -1,11 +1,13 @@
-import * as UI from 'UI.js'
-import { Get } from './request'
+import * as UI from './UI.js'
+import { Get } from './request.js'
 
 /**
  * Does Everything that controlls the Website
  */
 
-var Adress = 'localhost:5000/Data'
+var Adress = 'http://localhost:5000/Data'
+
+loadCharts()
 
 function loadCharts (params) {
   // Load the UI For the specific Parts of the Page
@@ -23,6 +25,12 @@ function loadCharts (params) {
 
   Work = document.getElementById('Five')
   Five(Work)
+
+  Work = document.getElementById('Six')
+  Six(Work)
+
+  Work = document.getElementById('Seven')
+  Seven(Work)
 }
 
 /**
@@ -41,6 +49,7 @@ function One (WorkingObject) {
   return ''
 }
 
+// what is rated highest
 function Two (WorkingObject) {
   var QuestionId = 7
   var body = { SecurityCookie: 'hdash', QuestionID: QuestionId }
@@ -53,6 +62,7 @@ function Two (WorkingObject) {
   return ''
 }
 
+// What do we have in stock
 function Three (WorkingObject) {
   var QuestionId = 8
   var body = { SecurityCookie: 'hdash', QuestionID: QuestionId }
@@ -64,6 +74,7 @@ function Three (WorkingObject) {
   return ''
 }
 
+// Product with the most comments
 function Four (WorkingObject) {
   var QuestionId = 9
   var body = { SecurityCookie: 'hdash', QuestionID: QuestionId }
@@ -76,7 +87,7 @@ function Four (WorkingObject) {
   return ''
 }
 
-// User with the most Comments
+// User who made the most Comments
 function Five (WorkingObject) {
   var QuestionId = 10
   var body = { SecurityCookie: 'hdash', QuestionID: QuestionId }

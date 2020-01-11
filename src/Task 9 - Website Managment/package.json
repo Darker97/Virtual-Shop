@@ -6,7 +6,8 @@
   "author": "Christian Baltzer (Darker97)",
   "license": "MIT",
   "dependencies": {
-    "canvasjs": "^1.8.3"
+    "canvasjs": "^1.8.3",
+    "ibm-watson": "^5.2.1"
   },
   "devDependencies": {
     "css-loader": "^1.0.0",

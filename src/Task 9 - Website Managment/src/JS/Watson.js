@@ -30,11 +30,16 @@ function toggleRecording () {
           gumStream = stream
           recorder = new MediaRecorder(stream)
           recorder.ondataavailable = function (e) {
-            var url = URL.createObjectURL(e.data)
+            sendToAPI(e.data)
+              .then(response => {
+                document.getElementById('Watson').appendChild(response)
+              })
+            
+            /*var url = URL.createObjectURL(e.data)
             var preview = document.createElement('audio')
             preview.controls = true
             preview.src = url
-            document.getElementById('Watson').appendChild(preview)
+            document.getElementById('Watson').appendChild(preview)*/
           }
           recorder.start()
         })
@@ -46,6 +51,22 @@ function toggleRecording () {
 
 // send to API
 // 'audio/ogg' in Firefox
+function sendToAPI (params) {
+  fetch(keys.speechToText[0].credentials.url, {
+    body: params,
+    headers: {
+      'Content-Type': 'audio/oog',
+      Authorization: keys.speechToText[0].credentials.apikey
+    },
+    method: 'POST'
+  })
+    .then(response => {
+      console.log(response)
+      return response
+    }).catch(err => {
+      console.log(err)
+    })
+}
 
 // Result + Logic
 

@@ -3,11 +3,11 @@
    * @param {String} Link
    * @param {String} Message
    */
-export function Put (Link, Message) {
+export function Post (Link, Message) {
   fetch(Link, {
-    method: 'PUT',
+    method: 'POST',
     headers: { 'content-type': 'application/json' },
-    body: Message
+    form: Message
   })
     .then(response => {
       console.log(response)
@@ -25,8 +25,7 @@ export function Put (Link, Message) {
    */
 export function Get (Link, Message) {
   fetch(Link, {
-    method: 'GET',
-    headers: { 'content-type': 'application/json' },
+    method: 'PUT',
     body: Message
   })
     .then(response => {

@@ -16,6 +16,10 @@ main{
     text-align: center;
 }
 
+body{
+  background-color: #edffd821;
+}
+
 bubble{
     background-color: #c4c4c4;
     text-align: center;
@@ -60,6 +64,7 @@ body > header > div > img {
   width: 150px;
   position: absolute;
   top: 0px;
+  border-radius: 20px;
 }
 
 body > header > h2 {

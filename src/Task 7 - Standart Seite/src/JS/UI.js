@@ -5,6 +5,14 @@ export function view () {
   const temp = document.createElement('artikel')
   return temp
 }
+
+/**
+ * returns a view of type div
+ */
+export function div () {
+  const temp = document.createElement('div')
+  return temp
+}
   
   /**
    * returns button with a name

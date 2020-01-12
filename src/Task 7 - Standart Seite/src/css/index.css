@@ -68,6 +68,10 @@ artikel button {
     width: 100%;
     font-size: 18px;
     border-radius: 10px;
+    padding-top: 1%;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    padding-bottom:1%;
 }
 
 artikel p{

@@ -93,14 +93,17 @@ function loadData(params) {
         let name = ui.headline('headline')
         let price = ui.headline3('10€')
         let text = ui.content('Calories: 4 \nProtein: \nFat: 4 \nSodium:4 \nFiber: 4 \nCarbo: 44 \nSugar: 4 \nVitamins: 5')
-        let button = ui.button('See more')
+        let buttonStorage = ui.button('in Store')
+        let buttonReview = ui.button('See more')
         // sets ID for button 
-        button.id = 'button' + i
+        buttonStorage.id = 'button' + i
+        buttonReview.id = 'RevButton' + i
         document.getElementById('grid').appendChild(view)
         document.querySelectorAll('artikel')[i].appendChild(name)
         document.querySelectorAll('artikel')[i].appendChild(price)
         document.querySelectorAll('artikel')[i].appendChild(text)
-        document.querySelectorAll('artikel')[i].appendChild(button)
+        document.querySelectorAll('artikel')[i].appendChild(buttonStorage)
+        
         let e = i
         //let storage = ui.headline3('10x in Storage')
        // document.querySelectorAll('artikel')[0].appendChild(storage)
@@ -115,7 +118,18 @@ function loadData(params) {
                 there = 1
             }    
         })
-        
+        let is = 0
+        document.querySelectorAll('artikel')[i].appendChild(buttonReview)
+        document.getElementById('RevButton' + i).addEventListener('click', function () { // auslagern!
+            if (is === 0) {
+                let storage = ui.headline3('Rev')
+                console.log(document.querySelectorAll('artikel'))
+                console.log(e)
+                document.querySelectorAll('artikel')[e].appendChild(storage)
+                is = 1
+            }    
+        })
+
         i++
     }
 

@@ -77,8 +77,7 @@ function One (WorkingObject) {
     },
     axisY2: {
       interlacedColor: 'rgba(1,77,101,.2)',
-      gridColor: 'rgba(1,77,101,.1)',
-      title: 'Names'
+      gridColor: 'rgba(1,77,101,.1)'
     },
     data: [{
       type: 'bar',
@@ -117,7 +116,7 @@ function Two (WorkingObject) {
     axisY2: {
       interlacedColor: 'rgba(1,77,101,.2)',
       gridColor: 'rgba(1,77,101,.1)',
-      title: 'Names'
+      title: 'Rating Score'
     },
     data: [{
       type: 'bar',
@@ -198,8 +197,7 @@ function Four (WorkingObject) {
     },
     axisY2: {
       interlacedColor: 'rgba(1,77,101,.2)',
-      gridColor: 'rgba(1,77,101,.1)',
-      title: 'Names'
+      gridColor: 'rgba(1,77,101,.1)'
     },
     data: [{
       type: 'bar',
@@ -237,8 +235,7 @@ function Five (WorkingObject) {
     },
     axisY2: {
       interlacedColor: 'rgba(1,77,101,.2)',
-      gridColor: 'rgba(1,77,101,.1)',
-      title: 'Names'
+      gridColor: 'rgba(1,77,101,.1)'
     },
     data: [{
       type: 'bar',
@@ -278,7 +275,7 @@ function Six (WorkingObject) {
     },
     data: [{
       type: 'bar',
-      name: 'Revenue',
+      name: 'Revenue in €',
       axisYType: 'secondary',
       color: '#014D65',
       dataPoints: datapointsTemp
@@ -296,7 +293,7 @@ function Seven (WorkingObject) {
   form.append('QuestionID', QuestionId)
   // var Data = Get(Adress, form)
 
-  WorkingObject.appendChild(UI.headline(Data.zwölf[0].Revenue))
+  WorkingObject.appendChild(UI.headline((Data.zwölf[0].Revenue) + '€'))
 }
 
 

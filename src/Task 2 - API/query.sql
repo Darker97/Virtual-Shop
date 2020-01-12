@@ -1,5 +1,5 @@
 SELECT * FROM Shop.Products;
-Query2
+select Products_Name, Rating, Body, Customers.Name from Shop.Comments join Shop.Customers on Comments.Customers_ID = Customers.ID;
 Query3
 Query4
 Query5

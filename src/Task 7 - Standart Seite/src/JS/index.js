@@ -20,7 +20,7 @@ loadData()
 
 function login() { // script on load login in html!!
     // Check for Input
-    document.getElementById('button1').addEventListener('click', function () {
+    document.getElementById('buttonLog').addEventListener('click', function () {
         loadInput()
         // hashLoginData()
     })
@@ -86,28 +86,41 @@ function loadData(params) {
     }
 */
     //tests
-    let i = 0
+    var i = 0
 
-    while( i != 10) {
+   while( i != 20) {
         let view = ui.view()
         let name = ui.headline('headline')
         let price = ui.headline3('10€')
         let text = ui.content('Calories: 4 \nProtein: \nFat: 4 \nSodium:4 \nFiber: 4 \nCarbo: 44 \nSugar: 4 \nVitamins: 5')
         let button = ui.button('See more')
+        // sets ID for button 
+        button.id = 'button' + i
         document.getElementById('grid').appendChild(view)
         document.querySelectorAll('artikel')[i].appendChild(name)
         document.querySelectorAll('artikel')[i].appendChild(price)
         document.querySelectorAll('artikel')[i].appendChild(text)
         document.querySelectorAll('artikel')[i].appendChild(button)
-        document.querySelectorAll('button')[i+1].addEventListener('click', function () { //auslagern!
-            let storage = ui.headline3('10x in Storage')
-            //document.querySelectorAll('artikel')[i].appendChild(storage)
-            console.log(i)
-            
+        let e = i
+        //let storage = ui.headline3('10x in Storage')
+       // document.querySelectorAll('artikel')[0].appendChild(storage)
+       let there = 0
+       
+        document.getElementById('button' + i).addEventListener('click', function () { // auslagern!
+            if (there === 0) {
+                let storage = ui.headline3('10x in Storage')
+                console.log(document.querySelectorAll('artikel'))
+                console.log(e)
+                document.querySelectorAll('artikel')[e].appendChild(storage)
+                there = 1
+            }    
         })
+        
         i++
-
     }
+
+
+
     
     // Check for Cookie
 

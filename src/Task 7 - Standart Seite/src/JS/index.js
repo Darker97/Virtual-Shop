@@ -55,37 +55,103 @@ function login() { // script on load login in html!!
 
 function loadData(params) {
 
-    // Load Data
-    // test
-   /* let message = {
+    // Load Data Standard
+   let messageStandard = {
         SecurityCookie: 'cookie',
         QuestionID: 0
     }
-    let answer = request.Get(adress, message)
+    let answer = request.Get(adress, messageStandard)
     let aLength = answer.length
-    console.log(answer)
+    // console.log(answer)
+
+    // load Data Storage
+
+    let messageStorage = {
+        SecurityCookie: 'cookie',
+        QuestionID: 7
+    }
+    let answerStorage = request.Get(adress, messageStorage)
+    let aLengthStorage = answerStorage.length
+    // console.log(answerStorage)
+
+    // load data Score
+    let messageScore = {
+        SecurityCookie: 'cookie',
+        QuestionID: 6
+    }
+    let answerScore = request.Get(adress, messageScore)
+    let aLengthScore = answerScore.length
+    // console.log(answerScore)
+
+    if(answerStorage !== answer) {
+        console.log('Storage and Standard data don\'t have the same length')
+    } // assume this wont happen and if it happens its an mistake of the API
+
+    if(answerScore !== answer) {
+        console.log('Storage and Score data don\'t have the same length')
+    } // assume this wont happen and if it happens its an mistake of the API
+
+
     let i = 0
     while (i !== aLength) {
         let product = arr[i]
         product.split(',')
+
+        let storage = arr[i]
+        storage.split(',')
+
+        let score = arr[i]
+        score.split(',')
+
         let view = ui.view()
         let name = ui.headline(product[1])
         let price = ui.headline3(product[11] + '€')
         let text = ui.content('Calories: ' + product[3] + '\nProtein: ' + product[4] + '\nFat: ' + product[5] + '\nSodium: ' + product[6] + '\nFiber: ' + product[7] + '\nCarbo: ' + product[8] + '\nSugar: ' + product[9] + '\nVitamins: ' + product[10])
-        let button = ui.button('See more')
+
+        let buttonStorage = ui.button('in Store')
+        let buttonReview = ui.button('See more')
+
+        // sets ID for the buttons
+        buttonStorage.id = 'button' + i
+        buttonReview.id = 'RevButton' + i
+
         document.getElementById('grid').appendChild(view)
         document.querySelectorAll('artikel')[i].appendChild(name)
         document.querySelectorAll('artikel')[i].appendChild(price)
         document.querySelectorAll('artikel')[i].appendChild(text)
-        document.querySelectorAll('artikel')[i].appendChild(button)
-        document.querySelectorAll('button')[1].addEventListener('click', function () {
-            let storage = ui.headline3('10x in Storage')  //muss natürlich noch individualisiert werden
-            document.querySelectorAll('artikel')[1+i].appendChild(storage)
+        document.querySelectorAll('artikel')[i].appendChild(buttonStorage)
+
+        // EventListeners for buttons
+        let e = i
+        let there = 0
+        // for Storage
+        document.getElementById('button' + i).addEventListener('click', function () { // auslagern!
+            if (there === 0) {
+                let storage = ui.headline3(storage[1]+'x in Storage')
+                console.log(document.querySelectorAll('artikel'))
+                console.log(e)
+                document.querySelectorAll('artikel')[e].appendChild(storage)
+                there = 1
+            }
+        })
+        let is = 0
+        document.querySelectorAll('artikel')[i].appendChild(buttonReview)
+
+        // for Score of the reviews
+        document.getElementById('RevButton' + i).addEventListener('click', function () { // auslagern!
+            if (is === 0) {
+                let storage = ui.headline3('Was rated by our customers with a total score of: ' + score[1])
+                console.log(document.querySelectorAll('artikel'))
+                console.log(e)
+                document.querySelectorAll('artikel')[e].appendChild(storage)
+                is = 1
+            }
         })
         i++
     }
-*/
-    //tests
+
+// test code to work out the design 
+/*
     var i = 0
 
    while( i != 20) {
@@ -98,6 +164,7 @@ function loadData(params) {
         // sets ID for button 
         buttonStorage.id = 'button' + i
         buttonReview.id = 'RevButton' + i
+
         document.getElementById('grid').appendChild(view)
         document.querySelectorAll('artikel')[i].appendChild(name)
         document.querySelectorAll('artikel')[i].appendChild(price)
@@ -105,9 +172,7 @@ function loadData(params) {
         document.querySelectorAll('artikel')[i].appendChild(buttonStorage)
         
         let e = i
-        //let storage = ui.headline3('10x in Storage')
-       // document.querySelectorAll('artikel')[0].appendChild(storage)
-       let there = 0
+        let there = 0
        
         document.getElementById('button' + i).addEventListener('click', function () { // auslagern!
             if (there === 0) {
@@ -122,7 +187,7 @@ function loadData(params) {
         document.querySelectorAll('artikel')[i].appendChild(buttonReview)
         document.getElementById('RevButton' + i).addEventListener('click', function () { // auslagern!
             if (is === 0) {
-                let storage = ui.headline3('Rev')
+                let storage = ui.headline3('Was rated by our customers with a total score of: 10')
                 console.log(document.querySelectorAll('artikel'))
                 console.log(e)
                 document.querySelectorAll('artikel')[e].appendChild(storage)
@@ -133,9 +198,8 @@ function loadData(params) {
         i++
     }
 
+*/
 
-
-    
     // Check for Cookie
 
     // if Cookie is there, load special Data

@@ -3,13 +3,22 @@ import time
 import mysql.connector as mysql
 
 from flask import Flask
+from flask import Response
 from flask import request
+from flask_cors import CORS, cross_origin
 
 from ApiLogic import ApiLogic
 from BotLogic import BotLogic
 from Database_Functions import Database_Functions
 
 # ------------------------------------------
+def header(message):
+        response = Response(message)
+        response.headers.add("Access-Control-Allow-Origin", "*")
+        response.headers.add("Access-Control-Allow-Headers", "*")
+        response.headers.add("Access-Control-Allow-Methods", "GET, PUT, POST, DELETE, HEAD, OPTIONS")
+        response.headers.add('X-Content-Type-Options', 'nosniff')
+        return response
 
 # setup for the tool
 def setup():
@@ -26,13 +35,15 @@ def startAPI(Database):
     app = Flask("Api")
 
     query = ApiLogic.queryloader()
+    cors = CORS(app, resources={r"/Data": {"origins": "http://localhost:5000"}})
 
     @app.route('/')
     def index():
-        return """ The Most efficient way to Optimize an SQL Query is to eliminate it.  """
+        return header(""" The Most efficient way to Optimize an SQL Query is to eliminate it.  """)
 
     # Question with QuestionID
-    @app.route('/Data', methods=['GET'])
+    @app.route('/Data', methods=['PUT'])
+    @cross_origin()
     def QuestionWithID():
         answer = ApiLogic.QuestionToTheServer(request.form['SecurityCookie'], request.form['QuestionID'], Database, query)
         return answer
@@ -89,3 +100,4 @@ print("""
 DB = Database_Functions.ConnectToDatabase()
 setup()
 startAPI(DB)
+

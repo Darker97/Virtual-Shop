@@ -5,7 +5,8 @@
 2. run the shell script DockerStarter.sh
 
 ## ERM Diagram 
-![image](https://user-images.githubusercontent.com/35217578/72347857-5b8d2000-36d9-11ea-8dee-1e9f7857522b.png)
+![ERM](https://user-images.githubusercontent.com/35217578/72347937-7fe8fc80-36d9-11ea-84e8-6ffc956fead1.png)
+
 
 
 ## More Info:
